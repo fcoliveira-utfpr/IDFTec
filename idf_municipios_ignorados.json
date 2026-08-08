@@ -1,0 +1,12 @@
+[
+  {
+    "codigo_ibge": "3205309",
+    "nome_municipio": "Vitória",
+    "motivo": "dados insuficientes (0 ano(s) válido(s), mínimo 20)"
+  },
+  {
+    "codigo_ibge": "2605459",
+    "nome_municipio": "Fernando de Noronha",
+    "motivo": "dados insuficientes (0 ano(s) válido(s), mínimo 20)"
+  }
+]
