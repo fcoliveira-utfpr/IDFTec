@@ -155,6 +155,25 @@
                         </p>
                         <p id="chart-empty" class="hidden text-xs text-slate-400 text-center py-10">Sem curva IDF calculada para este município.</p>
                     </div>
+                    <div class="mt-5 pt-4 border-t border-slate-100">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="text-[10px] font-black text-blue-800 uppercase tracking-widest">Série Histórica — Chuva Máxima Diária Anual</h4>
+                            <button id="download-serie-btn" onclick="downloadSerieCSV()" class="p-1.5 px-2.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 flex items-center gap-1.5 text-xs font-bold shrink-0" title="Baixar CSV com a série histórica deste município">
+                                <i data-lucide="download" class="w-3.5 h-3.5"></i> CSV
+                            </button>
+                        </div>
+                        <div id="serie-chart-wrap" style="height:220px">
+                            <canvas id="serieChart"></canvas>
+                        </div>
+                        <p id="serie-chart-loading" class="hidden text-xs text-slate-400 text-center py-10">
+                            <i data-lucide="loader" class="w-4 h-4 inline animate-spin"></i> Carregando série histórica...
+                        </p>
+                        <p id="serie-chart-empty" class="hidden text-xs text-slate-400 text-center py-10">Sem série histórica disponível para este município.</p>
+                        <p id="serie-chart-note" class="hidden text-[10px] text-slate-400 mt-1.5">
+                            <span class="inline-block w-2 h-2 rounded-sm align-middle" style="background:#93c5fd"></span>
+                            Barras claras: ano estimado por média da vizinhança (pixel do município sem dado direto).
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -187,18 +206,24 @@ const GEO_URL = (uf) =>
 
 const URL_RESUMO = 'idf_municipios_resumo.csv';
 const URL_CURVAS_UF = (uf) => `idf_uf/${uf}.json`;
+const URL_SERIE_UF = (uf) => `serie_uf/${uf}.json`;
 
 const DURACOES_MIN = [5, 10, 15, 20, 25, 30, 60, 360, 480, 600, 720, 1440];
 const PERIODOS_RETORNO = ['5', '10', '25', '50', '100'];
 const CORES_TR = { '5':'#60a5fa', '10':'#34d399', '25':'#fbbf24', '50':'#fb923c', '100':'#ef4444' };
 
-let map, geojsonLayer, idfChart;
+let map, geojsonLayer, idfChart, serieChart;
 const codeToResumo = new Map();   // code -> linha do CSV resumo
 const layerByCode  = new Map();   // code -> layer Leaflet (do estado atualmente exibido)
 
 let curvasData     = {};   // code -> {idf_k,...,duracoes_min,curvas_mm_h} do estado atual
 let curvasUfLoaded = null;
 let curvasLoading  = false;
+
+let serieAnos      = [];  // anos (1961..2025) do estado atual
+let serieData      = {};  // code -> {nome,valores,anos_vizinhanca} do estado atual
+let serieUfLoaded  = null;
+let serieLoading   = false;
 
 let resumoReady = false;
 let currentUf = "PR";
@@ -297,6 +322,7 @@ function loadResumo(){
             populateMunicipioSelect();
             processMapData();
             loadCurvasBackground(currentUf);
+            loadSerieBackground(currentUf);
         },
         error:()=>{setStatus('Erro ao carregar resumo IDF','bg-red-100 text-red-800');hideLoad();}
     });
@@ -320,6 +346,27 @@ async function loadCurvasBackground(uf){
     } finally {
         curvasLoading = false;
         if(selectedCode) renderIdfChart(selectedCode);
+    }
+}
+
+async function loadSerieBackground(uf){
+    if(serieUfLoaded===uf || serieLoading) return;
+    serieLoading = true;
+    try{
+        const resp = await fetch(URL_SERIE_UF(uf));
+        if(!resp.ok) throw new Error('HTTP '+resp.status);
+        const payload = await resp.json();
+        serieAnos = payload.anos || [];
+        serieData = payload.municipios || {};
+        serieUfLoaded = uf;
+    } catch(err){
+        console.error(err);
+        serieAnos = [];
+        serieData = {};
+        serieUfLoaded = null;
+    } finally {
+        serieLoading = false;
+        if(selectedCode) renderSerieChart(selectedCode);
     }
 }
 
@@ -468,6 +515,7 @@ function showMunicipioDetail(code, nomeFallback){
     document.getElementById('detail-indices').innerHTML = idx;
 
     renderIdfChart(code);
+    renderSerieChart(code);
 
     document.getElementById('detail-panel').classList.add('open');
     if(typeof lucide!=='undefined') lucide.createIcons();
@@ -522,6 +570,82 @@ function renderIdfChart(code){
             scales:{
                 x: { type:'logarithmic', title:{display:true,text:'Duração (min)',font:{size:10}} },
                 y: { title:{display:true,text:'Intensidade (mm/h)',font:{size:10}}, beginAtZero:true }
+            }
+        }
+    });
+}
+
+function renderSerieChart(code){
+    if(code !== selectedCode) return;
+    const wrap    = document.getElementById('serie-chart-wrap');
+    const loading = document.getElementById('serie-chart-loading');
+    const empty   = document.getElementById('serie-chart-empty');
+    const note    = document.getElementById('serie-chart-note');
+
+    const seriePronto = (serieUfLoaded===currentUf) && !serieLoading;
+    if(!seriePronto){
+        wrap.classList.add('hidden');
+        empty.classList.add('hidden');
+        note.classList.add('hidden');
+        loading.classList.remove('hidden');
+        if(typeof lucide!=='undefined') lucide.createIcons();
+        return;
+    }
+
+    const serie = serieData[code];
+    if(!serie){
+        wrap.classList.add('hidden');
+        loading.classList.add('hidden');
+        note.classList.add('hidden');
+        empty.classList.remove('hidden');
+        return;
+    }
+
+    loading.classList.add('hidden');
+    empty.classList.add('hidden');
+    wrap.classList.remove('hidden');
+
+    const anosVizinhanca = new Set(serie.anos_vizinhanca || []);
+    note.classList.toggle('hidden', anosVizinhanca.size===0);
+
+    const COR_BASE = '#2563eb';
+    const COR_ESTIMADO = '#93c5fd';
+    const cores = serieAnos.map(a => anosVizinhanca.has(a) ? COR_ESTIMADO : COR_BASE);
+
+    if(serieChart) serieChart.destroy();
+    const ctx = document.getElementById('serieChart').getContext('2d');
+    serieChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: serieAnos,
+            datasets: [{
+                label: 'Chuva máxima diária (mm)',
+                data: serie.valores,
+                backgroundColor: cores,
+                borderRadius: 4,
+                borderSkipped: 'bottom',
+                maxBarThickness: 18,
+            }]
+        },
+        options: {
+            responsive:true, maintainAspectRatio:false,
+            plugins:{
+                legend:{display:false},
+                tooltip:{
+                    callbacks:{
+                        title: items => `Ano ${items[0].label}`,
+                        label: item => {
+                            const ano = serieAnos[item.dataIndex];
+                            const v = item.parsed.y;
+                            const base = (v===null||v===undefined) ? 'sem dado' : `${v.toLocaleString('pt-BR',{maximumFractionDigits:1})} mm`;
+                            return anosVizinhanca.has(ano) ? `${base} (estimado por vizinhança)` : base;
+                        }
+                    }
+                }
+            },
+            scales:{
+                x: { title:{display:true,text:'Ano',font:{size:10}}, ticks:{maxRotation:0,autoSkip:true,font:{size:9}}, grid:{display:false} },
+                y: { title:{display:true,text:'Chuva máxima diária (mm)',font:{size:10}}, beginAtZero:true, grid:{color:'#e5e7eb'} }
             }
         }
     });
@@ -597,6 +721,31 @@ function downloadMunicipioCSV(){
     triggerCsvDownload(`idf_${slugify(nome)}_${code}.csv`, csvFinal);
 }
 
+function downloadSerieCSV(){
+    if(!selectedCode){ alert('Selecione um município primeiro.'); return; }
+    const code = selectedCode;
+    const serie = serieData[code];
+    if(!serie){ alert('Série histórica indisponível para este município (ainda a carregar ou sem cobertura).'); return; }
+
+    const row = codeToResumo.get(code);
+    const nome = serie.nome || (row && row.name_muni) || 'municipio';
+    const anosVizinhanca = new Set(serie.anos_vizinhanca || []);
+
+    const linhasDados = serieAnos.map((ano,i) => ({
+        ano,
+        chuva_maxima_diaria_mm: (serie.valores[i]===null||serie.valores[i]===undefined) ? '' : serie.valores[i],
+        metodo: anosVizinhanca.has(ano) ? 'media_vizinhanca_20km' : 'centroide',
+    }));
+
+    const linhas = [];
+    linhas.push('# IDFTec Data — Série histórica de chuva máxima diária anual');
+    linhas.push(`# Município: ${nome} (código IBGE ${code}, ${currentUf})`);
+    linhas.push('# Fonte: chuva máxima diária anual, grade Xavier BR-DWGD, via Google Earth Engine, 1961-2025');
+    linhas.push(Papa.unparse(linhasDados));
+
+    triggerCsvDownload(`serie_chuva_maxima_${slugify(nome)}_${code}.csv`, linhas.join('\n'));
+}
+
 // ==========================================
 // EVENTOS
 // ==========================================
@@ -606,6 +755,7 @@ document.getElementById('stateSelect').addEventListener('change',e=>{
     populateMunicipioSelect();
     if(resumoReady) processMapData();
     loadCurvasBackground(currentUf);
+    loadSerieBackground(currentUf);
 });
 
 document.getElementById('metricSelect').addEventListener('change',e=>{

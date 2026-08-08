@@ -6,6 +6,7 @@ JSON leve por UF (para os gráficos, carregado sob demanda ao trocar de estado).
 Gera:
     idf_municipios_resumo.csv   — 1 linha por município (mapa + cards de índice)
     idf_uf/{UF}.json            — curvas IDF completas por município daquela UF
+    serie_uf/{UF}.json          — série histórica anual (chuva máx. diária) por município
 
 Uso:
     python exportar_dados_site.py
@@ -46,6 +47,29 @@ def main():
         anos_total[r['codigo_ibge']] += 1
         if r['metodo'] != 'centroide':
             anos_vizinhanca[r['codigo_ibge']] += 1
+
+    anos = sorted({r['ano'] for r in registros_brutos})
+    ano_para_indice = {ano: i for i, ano in enumerate(anos)}
+    uf_para_serie = defaultdict(dict)
+    nome_por_codigo = {}
+    for r in registros_brutos:
+        codigo = r['codigo_ibge']
+        nome_por_codigo[codigo] = r['nome_municipio']
+        uf = corrigir_uf(codigo, r['uf'])
+        serie = uf_para_serie[uf].setdefault(codigo, {
+            'nome': r['nome_municipio'],
+            'valores': [None] * len(anos),
+            'anos_vizinhanca': [],
+        })
+        idx = ano_para_indice[r['ano']]
+        v = r['chuva_max_diaria_mm']
+        serie['valores'][idx] = round(v, 1) if v is not None else None
+        if r['metodo'] != 'centroide':
+            serie['anos_vizinhanca'].append(r['ano'])
+    for uf, municipios in uf_para_serie.items():
+        for serie in municipios.values():
+            if not serie['anos_vizinhanca']:
+                del serie['anos_vizinhanca']
 
     with open(BASE / 'idf_municipios.json', encoding='utf-8') as f:
         idf_registros = json.load(f)
@@ -121,6 +145,16 @@ def main():
     sem_uf = uf_para_municipios.get('', {})
     if sem_uf:
         print(f'ATENÇÃO: {len(sem_uf)} município(s) sem UF preenchida, não entraram em nenhum idf_uf/*.json: {list(sem_uf.keys())}')
+
+    pasta_serie = BASE / 'serie_uf'
+    pasta_serie.mkdir(exist_ok=True)
+    for uf, municipios in uf_para_serie.items():
+        if not uf:
+            continue
+        caminho = pasta_serie / f'{uf}.json'
+        with open(caminho, 'w', encoding='utf-8') as f:
+            json.dump({'anos': anos, 'municipios': municipios}, f, ensure_ascii=False, separators=(',', ':'))
+        print(f'serie_uf/{uf}.json: {len(municipios)} municípios')
 
 
 if __name__ == '__main__':

@@ -17,8 +17,9 @@ A plataforma **IDFTec Data** deixa explorar os resultados sem abrir uma linha de
 - Escolha um estado e um município
 - Veja os coeficientes da equação IDF, a distribuição estatística usada e o R² do ajuste
 - Explore o gráfico intensidade × duração para os períodos de retorno de 5 a 100 anos
+- Veja a série histórica de chuva máxima diária anual (1961–2025) em gráfico de barras
 - Colora o mapa do Brasil por intensidade projetada, chuva máxima média, ou pelo coeficiente `k`
-- Baixe os dados do município em CSV
+- Baixe os dados do município em CSV (curva IDF e série histórica)
 
 Toda a aplicação roda no navegador — sem servidor, sem backend, só HTML/JS e uma dose generosa de `fetch()`.
 
@@ -72,7 +73,8 @@ IDFTec/
 │   ├── idf_municipios.json                                          # curvas IDF completas
 │   ├── idf_municipios_ignorados.json                                # municípios sem série válida
 │   ├── idf_municipios_resumo.csv                                    # 1 linha/município (mapa + tabela)
-│   └── idf_uf/{UF}.json                                             # curvas completas, por estado
+│   ├── idf_uf/{UF}.json                                             # curvas completas, por estado
+│   └── serie_uf/{UF}.json                                           # série histórica anual, por estado
 │
 ├── 📝 MEMORIA_PROJETO.md               # histórico completo de decisões, bugs e correções
 │
