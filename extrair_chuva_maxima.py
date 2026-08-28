@@ -1,14 +1,14 @@
-"""Extrai a chuva máxima diária anual por município (grade Xavier BR-DWGD)
-via Google Earth Engine e salva um JSON na pasta do projeto.
+"""Extracts the annual maximum daily rainfall per municipality (Xavier
+BR-DWGD grid) via Google Earth Engine and saves a JSON in the project folder.
 
-Versão em script (roda local, sem depender de Colab/download manual) do
-`chuva_maxima_anual_municipios_xavier.ipynb` — mesma lógica: correção de
-escala/offset da banda `pr`, paginação para não estourar o limite de ~5000
-elementos por consulta síncrona do Earth Engine, retry com espera, checkpoint
-incremental por ano e preenchimento por vizinhança para municípios cujo
-centróide cai num pixel sem dado válido.
+Script version (runs locally, without depending on Colab/manual download) of
+`chuva_maxima_anual_municipios_xavier.ipynb` — same logic: scale/offset
+correction of the `pr` band, pagination to stay under the ~5000-element limit
+of a synchronous Earth Engine query, retry with backoff, incremental
+per-year checkpointing, and neighborhood fill for municipalities whose
+centroid falls on a pixel without a valid value.
 
-Uso:
+Usage:
     python extrair_chuva_maxima.py
     python extrair_chuva_maxima.py --ano-inicial 2020 --ano-final 2025
     python extrair_chuva_maxima.py --saida meu_arquivo.json
@@ -24,14 +24,14 @@ import ee
 GEE_PROJECT = 'fcoliveira'
 XAVIER_ASSET = 'projects/ee-alexandrexavier/assets/BR-DWGD'
 CENTROIDES_ASSET = 'projects/fcoliveira/assets/centroide_br'
-COL_CODIGO = '﻿codigo_ibge'  # BOM presente no asset de centroides atual
+COL_CODIGO = '﻿codigo_ibge'  # BOM present in the current centroids asset
 
-ESCALA_METROS = 11_000  # resolução nativa da grade Xavier é 0,1° (~11 km)
+ESCALA_METROS = 11_000  # native resolution of the Xavier grid is 0.1° (~11 km)
 TILE_SCALE = 4
-TAMANHO_PAGINA = 2000  # bem abaixo do limite de ~5000 elementos por consulta síncrona do EE
+TAMANHO_PAGINA = 2000  # well below the ~5000-element limit of a synchronous EE query
 MAX_TENTATIVAS = 3
 ESPERA_ENTRE_TENTATIVAS_S = 30
-RAIOS_PREENCHIMENTO_M = [20_000, 50_000, 100_000]  # raios progressivos para preencher nulos com média da vizinhança
+RAIOS_PREENCHIMENTO_M = [20_000, 50_000, 100_000]  # progressive radii to fill nulls with a neighborhood average
 
 CAMPOS = ['codigo_ibge', 'nome_municipio', 'uf', 'ano', 'chuva_max_diaria_mm', 'unidade', 'fonte', 'metodo']
 
@@ -206,8 +206,8 @@ def main():
             aviso_contagem = f' [ATENÇÃO: esperado {total_municipios}]'
         print(f'Ano {ano}: {len(feicoes_ano)} municípios extraídos (total acumulado: {len(registros)}){aviso_nulos}{aviso_contagem}')
 
-        # Regrava o JSON a cada ano processado, para não perder o progresso já
-        # feito se um ano posterior falhar todas as tentativas.
+        # Rewrites the JSON after every processed year, so progress isn't
+        # lost if a later year fails all retries.
         with open(caminho_saida, 'w', encoding='utf-8') as arquivo:
             json.dump(registros, arquivo, ensure_ascii=False, indent=2)
 

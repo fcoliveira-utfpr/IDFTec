@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="pt-pt">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IDFTec Data — Curvas IDF por Município</title>
+    <title data-i18n-title="idf_page_title">IDFTec Data — IDF Curves by Municipality</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="i18n.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; margin: 0; }
@@ -31,7 +32,7 @@
 <div id="loading-screen">
     <div class="spinner"></div>
     <p style="margin-top:16px;font-weight:700;color:#1e40af;font-size:17px">IDFTec Data</p>
-    <p style="color:#6b7280;font-size:13px;margin-top:4px" id="load-msg">Carregando resumo das curvas IDF...</p>
+    <p style="color:#6b7280;font-size:13px;margin-top:4px" id="load-msg" data-i18n="msg_loading_resumo">Loading IDF curve summary...</p>
 </div>
 
 <header class="bg-emerald-800 text-white px-4 py-3 shadow-lg sticky top-0 z-50 relative">
@@ -39,15 +40,18 @@
         <div class="flex items-center gap-2">
             <i data-lucide="cloud-rain-wind" class="w-8 h-8 text-emerald-300"></i>
             <div>
-                <h1 class="text-lg font-bold tracking-tight">IDFTec Data</h1>
-                <p class="text-emerald-200 text-xs">Curvas Intensidade-Duração-Frequência por Município</p>
+                <h1 class="text-lg font-bold tracking-tight" data-i18n="brand">IDFTec Data</h1>
+                <p class="text-emerald-200 text-xs" data-i18n="header_subtitle2">Intensity-Duration-Frequency Curves by Municipality</p>
             </div>
         </div>
         <div class="flex items-center gap-2">
             <div class="hidden sm:flex items-center gap-1.5 bg-emerald-900/50 px-3 py-1.5 rounded-full border border-emerald-700/50">
                 <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></div>
-                <span class="text-[9px] font-bold uppercase tracking-widest text-emerald-200">Sistema Ativo</span>
+                <span class="text-[9px] font-bold uppercase tracking-widest text-emerald-200" data-i18n="system_active">System Active</span>
             </div>
+            <button id="lang-toggle-btn" onclick="toggleLang()" class="p-1.5 px-3 bg-emerald-900 border border-emerald-700 rounded-lg text-emerald-100 hover:bg-emerald-700 transition-all flex items-center gap-1.5 text-sm font-bold">
+                <i data-lucide="languages" class="w-4 h-4"></i> <span id="lang-toggle-label">PT</span>
+            </button>
             <button id="menu-toggle-btn" onclick="toggleMenu()" class="p-1.5 px-3 bg-emerald-900 border border-emerald-700 rounded-lg text-emerald-100 hover:bg-emerald-700 transition-all flex items-center gap-1.5 text-sm font-bold">
                 MENU <i data-lucide="menu" class="w-4 h-4"></i>
             </button>
@@ -56,10 +60,10 @@
     <div id="main-menu" class="hidden absolute top-full right-4 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden z-[100]">
         <div class="p-2 flex flex-col gap-1">
             <button onclick="window.location.href='index.html'" class="w-full text-left px-3 py-2.5 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 rounded-xl flex items-center gap-2 font-semibold text-sm">
-                <i data-lucide="home" class="w-4 h-4"></i> Início
+                <i data-lucide="home" class="w-4 h-4"></i> <span data-i18n="menu_home">Home</span>
             </button>
             <button onclick="toggleMenu()" class="w-full text-left px-3 py-2.5 bg-emerald-50 text-emerald-700 rounded-xl flex items-center gap-2 font-semibold text-sm">
-                <i data-lucide="cloud-rain-wind" class="w-4 h-4"></i> Mapa IDF
+                <i data-lucide="cloud-rain-wind" class="w-4 h-4"></i> <span data-i18n="menu_map">IDF Map</span>
             </button>
         </div>
     </div>
@@ -70,15 +74,15 @@
         <div class="lg:col-span-1">
             <div class="glass-card p-4 rounded-2xl shadow-sm border-t-4 border-t-blue-600">
                 <h2 class="text-sm font-bold mb-3 text-slate-800 flex items-center gap-2 border-b pb-2">
-                    <i data-lucide="map-pin" class="w-4 h-4 text-blue-600"></i> Parâmetros
+                    <i data-lucide="map-pin" class="w-4 h-4 text-blue-600"></i> <span data-i18n="panel_title">Parameters</span>
                 </h2>
-                <label class="block mb-1 text-xs font-bold text-slate-500 uppercase">Colorir mapa por:</label>
+                <label class="block mb-1 text-xs font-bold text-slate-500 uppercase" data-i18n="label_color_by">Color map by:</label>
                 <select id="metricSelect" class="w-full p-2 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 font-medium text-slate-700 text-sm mb-3">
-                    <option value="intensidade_tr100_24h_mm_h" selected>Intensidade TR=100 anos, 24h (mm/h)</option>
-                    <option value="chuva_max_media_mm">Chuva máxima diária anual média (mm)</option>
-                    <option value="idf_k">Coeficiente k da equação IDF</option>
+                    <option value="intensidade_tr100_24h_mm_h" selected data-i18n="metric_intensity">Intensity TR=100 years, 24h (mm/h)</option>
+                    <option value="chuva_max_media_mm" data-i18n="metric_rain">Average annual max daily rainfall (mm)</option>
+                    <option value="idf_k" data-i18n="metric_k">IDF equation coefficient k</option>
                 </select>
-                <label class="block mb-1 text-xs font-bold text-slate-500 uppercase">Estado (UF):</label>
+                <label class="block mb-1 text-xs font-bold text-slate-500 uppercase" data-i18n="label_state">State:</label>
                 <select id="stateSelect" class="w-full p-2 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 font-medium text-slate-700 text-sm mb-3">
                     <option value="AC">Acre</option><option value="AL">Alagoas</option>
                     <option value="AM">Amazonas</option><option value="AP">Amapá</option>
@@ -95,29 +99,29 @@
                     <option value="SE">Sergipe</option><option value="SP">São Paulo</option>
                     <option value="TO">Tocantins</option>
                 </select>
-                <label class="block mb-1 text-xs font-bold text-slate-500 uppercase">Município:</label>
+                <label class="block mb-1 text-xs font-bold text-slate-500 uppercase" data-i18n="label_municipality">Municipality:</label>
                 <select id="municipioSelect" class="w-full p-2 bg-white border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 font-medium text-slate-700 text-sm mb-3">
-                    <option value="">Selecione um estado...</option>
+                    <option value="" data-i18n="select_state_placeholder">Select a state...</option>
                 </select>
                 <p class="text-[11px] text-slate-500 mt-1 leading-relaxed">
                     <i data-lucide="mouse-pointer-click" class="w-3 h-3 inline"></i>
-                    Escolha um município na lista ou clique diretamente no mapa.
+                    <span data-i18n="hint_text">Choose a municipality from the list or click directly on the map.</span>
                 </p>
                 <div class="mt-4 space-y-2">
                     <div class="bg-blue-50 border border-blue-100 rounded-xl p-3">
-                        <h4 class="text-[10px] font-black text-blue-800 uppercase tracking-widest mb-1">Fonte de Dados</h4>
-                        <p class="text-[10px] text-blue-600 leading-relaxed">
-                            Chuva máxima diária anual, 1961–2025<br>
-                            Grade Xavier BR-DWGD (Google Earth Engine)<br>
-                            Malha: IBGE via geodata-br<br>
-                            Curva IDF: I(T,t) = k·T<sup>a</sup>/(t+b)<sup>c</sup>
+                        <h4 class="text-[10px] font-black text-blue-800 uppercase tracking-widest mb-1" data-i18n="data_source_title">Data Source</h4>
+                        <p class="text-[10px] text-blue-600 leading-relaxed" data-i18n-html="data_source_body_html">
+                            Annual maximum daily rainfall, 1961–2025<br>
+                            Xavier BR-DWGD grid (Google Earth Engine)<br>
+                            Mesh: IBGE via geodata-br<br>
+                            IDF curve: I(T,t) = k·T<sup>a</sup>/(t+b)<sup>c</sup>
                         </p>
                     </div>
-                    <div id="map-status" class="text-[10px] text-center py-1.5 px-2 rounded-lg font-bold bg-slate-100 text-slate-500">
-                        A aguardar...
+                    <div id="map-status" class="text-[10px] text-center py-1.5 px-2 rounded-lg font-bold bg-slate-100 text-slate-500" data-i18n="status_waiting">
+                        Waiting...
                     </div>
-                    <div id="curvas-status" class="text-[10px] text-center py-1.5 px-2 rounded-lg font-bold bg-slate-100 text-slate-500">
-                        Curvas IDF: a aguardar...
+                    <div id="curvas-status" class="text-[10px] text-center py-1.5 px-2 rounded-lg font-bold bg-slate-100 text-slate-500" data-i18n="status_curves_waiting">
+                        IDF curves: waiting...
                     </div>
                 </div>
             </div>
@@ -135,8 +139,8 @@
                             <p id="detail-subtitle" class="text-xs text-slate-500"></p>
                         </div>
                         <div class="flex items-center gap-1">
-                            <button id="download-csv-btn" onclick="downloadMunicipioCSV()" class="p-1.5 px-2.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 flex items-center gap-1.5 text-xs font-bold" title="Baixar CSV com os dados deste município">
-                                <i data-lucide="download" class="w-3.5 h-3.5"></i> CSV
+                            <button id="download-csv-btn" onclick="downloadMunicipioCSV()" class="p-1.5 px-2.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 flex items-center gap-1.5 text-xs font-bold">
+                                <i data-lucide="download" class="w-3.5 h-3.5"></i> <span data-i18n="btn_csv">CSV</span>
                             </button>
                             <button onclick="closeDetail()" class="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-700">
                                 <i data-lucide="x" class="w-4 h-4"></i>
@@ -146,32 +150,32 @@
                     <div id="detail-badges" class="flex flex-wrap gap-1.5 mb-3"></div>
                     <div id="detail-indices" class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs mb-4"></div>
                     <div>
-                        <h4 class="text-[10px] font-black text-blue-800 uppercase tracking-widest mb-2">Curva IDF — Intensidade × Duração</h4>
+                        <h4 class="text-[10px] font-black text-blue-800 uppercase tracking-widest mb-2" data-i18n="detail_idf_curve_title">IDF Curve — Intensity × Duration</h4>
                         <div id="chart-wrap" style="height:280px">
                             <canvas id="idfChart"></canvas>
                         </div>
                         <p id="chart-loading" class="hidden text-xs text-slate-400 text-center py-10">
-                            <i data-lucide="loader" class="w-4 h-4 inline animate-spin"></i> Carregando curva IDF...
+                            <i data-lucide="loader" class="w-4 h-4 inline animate-spin"></i> <span data-i18n="chart_loading_idf">Loading IDF curve...</span>
                         </p>
-                        <p id="chart-empty" class="hidden text-xs text-slate-400 text-center py-10">Sem curva IDF calculada para este município.</p>
+                        <p id="chart-empty" class="hidden text-xs text-slate-400 text-center py-10" data-i18n="chart_empty_idf">No IDF curve calculated for this municipality.</p>
                     </div>
                     <div class="mt-5 pt-4 border-t border-slate-100">
                         <div class="flex justify-between items-center mb-2">
-                            <h4 class="text-[10px] font-black text-blue-800 uppercase tracking-widest">Série Histórica — Chuva Máxima Diária Anual</h4>
-                            <button id="download-serie-btn" onclick="downloadSerieCSV()" class="p-1.5 px-2.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 flex items-center gap-1.5 text-xs font-bold shrink-0" title="Baixar CSV com a série histórica deste município">
-                                <i data-lucide="download" class="w-3.5 h-3.5"></i> CSV
+                            <h4 class="text-[10px] font-black text-blue-800 uppercase tracking-widest" data-i18n="detail_series_title">Historical Series — Annual Maximum Daily Rainfall</h4>
+                            <button id="download-serie-btn" onclick="downloadSerieCSV()" class="p-1.5 px-2.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 flex items-center gap-1.5 text-xs font-bold shrink-0">
+                                <i data-lucide="download" class="w-3.5 h-3.5"></i> <span data-i18n="btn_csv">CSV</span>
                             </button>
                         </div>
                         <div id="serie-chart-wrap" style="height:220px">
                             <canvas id="serieChart"></canvas>
                         </div>
                         <p id="serie-chart-loading" class="hidden text-xs text-slate-400 text-center py-10">
-                            <i data-lucide="loader" class="w-4 h-4 inline animate-spin"></i> Carregando série histórica...
+                            <i data-lucide="loader" class="w-4 h-4 inline animate-spin"></i> <span data-i18n="chart_loading_series">Loading historical series...</span>
                         </p>
-                        <p id="serie-chart-empty" class="hidden text-xs text-slate-400 text-center py-10">Sem série histórica disponível para este município.</p>
+                        <p id="serie-chart-empty" class="hidden text-xs text-slate-400 text-center py-10" data-i18n="chart_empty_series">No historical series available for this municipality.</p>
                         <p id="serie-chart-note" class="hidden text-[10px] text-slate-400 mt-1.5">
                             <span class="inline-block w-2 h-2 rounded-sm align-middle" style="background:#93c5fd"></span>
-                            Barras claras: ano estimado por média da vizinhança (pixel do município sem dado direto).
+                            <span data-i18n="series_note">Light bars: year estimated from neighborhood average (municipality pixel without direct data).</span>
                         </p>
                     </div>
                 </div>
@@ -181,19 +185,21 @@
 
     <p class="max-w-5xl mx-auto mt-6 text-[11px] text-slate-400 leading-relaxed">
         <i data-lucide="triangle-alert" class="w-3 h-3 inline"></i>
-        Os coeficientes <b>b</b> e <b>c</b> da equação IDF são praticamente constantes em todo o Brasil — efeito dos fatores de
-        desagregação DAEE/CETESB (regionais, de SP) aplicados nacionalmente, não uma diferença real de regime de chuva sub-diária
-        entre municípios. Só <b>k</b> e <b>a</b> variam de fato. Ver detalhes no repositório.
+        <span data-i18n-html="warning_text2_html">
+        The <b>b</b> and <b>c</b> coefficients of the IDF equation are nearly constant across all of Brazil — an effect of the
+        DAEE/CETESB disaggregation factors (regional, from São Paulo) applied nationwide, not a real difference in sub-daily
+        rainfall regime between municipalities. Only <b>k</b> and <b>a</b> actually vary. See details in the repository.
+        </span>
     </p>
 </main>
 
-<footer class="text-center py-6 text-[11px] text-slate-400">
+<footer class="text-center py-6 text-[11px] text-slate-400" data-i18n="footer_text">
     IDFTec Data — UTFPR Campus Santa Helena
 </footer>
 
 <script>
 // ==========================================
-// MAPEAMENTO UF -> código IBGE (2 dígitos)
+// STATE -> IBGE code MAPPING (2 digits)
 // ==========================================
 const UF_CODE = {
     AC:12,AL:27,AM:13,AP:16,BA:29,CE:23,DF:53,ES:32,
@@ -213,15 +219,15 @@ const PERIODOS_RETORNO = ['5', '10', '25', '50', '100'];
 const CORES_TR = { '5':'#60a5fa', '10':'#34d399', '25':'#fbbf24', '50':'#fb923c', '100':'#ef4444' };
 
 let map, geojsonLayer, idfChart, serieChart;
-const codeToResumo = new Map();   // code -> linha do CSV resumo
-const layerByCode  = new Map();   // code -> layer Leaflet (do estado atualmente exibido)
+const codeToResumo = new Map();   // code -> row from the summary CSV
+const layerByCode  = new Map();   // code -> Leaflet layer (of the currently displayed state)
 
-let curvasData     = {};   // code -> {idf_k,...,duracoes_min,curvas_mm_h} do estado atual
+let curvasData     = {};   // code -> {idf_k,...,duracoes_min,curvas_mm_h} of the current state
 let curvasUfLoaded = null;
 let curvasLoading  = false;
 
-let serieAnos      = [];  // anos (1961..2025) do estado atual
-let serieData      = {};  // code -> {nome,valores,anos_vizinhanca} do estado atual
+let serieAnos      = [];  // years (1961..2025) of the current state
+let serieData      = {};  // code -> {nome,valores,anos_vizinhanca} of the current state
 let serieUfLoaded  = null;
 let serieLoading   = false;
 
@@ -231,7 +237,7 @@ let currentMetric = "intensidade_tr100_24h_mm_h";
 let selectedCode = null;
 
 // ==========================================
-// UTILIDADES
+// UTILITIES
 // ==========================================
 function setMsg(t)  { const e=document.getElementById('load-msg');    if(e) e.textContent=t; }
 function hideLoad() { const e=document.getElementById('loading-screen'); if(e) e.style.display='none'; }
@@ -257,7 +263,7 @@ document.addEventListener('click',e=>{
 });
 
 // ==========================================
-// INIT MAPA
+// MAP INIT
 // ==========================================
 function initMap(){
     map=L.map('map').setView([-24.5,-51.0],6);
@@ -266,7 +272,7 @@ function initMap(){
 }
 
 // ==========================================
-// ESCALA DE COR CONTÍNUA (sequencial, azul→vermelho) por quantil
+// CONTINUOUS COLOR SCALE (sequential, blue→red) by quantile
 // ==========================================
 const RAMPA_CORES = ['#eff6ff','#bfdbfe','#60a5fa','#2563eb','#f97316','#dc2626'];
 
@@ -292,16 +298,16 @@ function corPorValor(v){
 }
 
 const METRIC_LABELS = {
-    intensidade_tr100_24h_mm_h: 'Intensidade TR=100a, 24h (mm/h)',
-    chuva_max_media_mm: 'Chuva máx. diária anual média (mm)',
-    idf_k: 'Coeficiente k',
+    intensidade_tr100_24h_mm_h: () => t('metric_intensity'),
+    chuva_max_media_mm: () => t('metric_rain'),
+    idf_k: () => t('metric_k'),
 };
 
 // ==========================================
-// CARGA — resumo primeiro (rápido, nacional), curvas por UF depois (fundo)
+// LOADING — summary first (fast, national), per-state curves after (background)
 // ==========================================
 function loadResumo(){
-    setMsg('Carregando resumo das curvas IDF...');
+    setMsg(t('msg_loading_resumo'));
     Papa.parse(URL_RESUMO,{download:true,header:true,skipEmptyLines:true,
         complete:res=>{
             res.data.forEach(row=>{
@@ -318,31 +324,31 @@ function loadResumo(){
                 codeToResumo.set(c,row);
             });
             resumoReady = true;
-            setMsg('Carregando grade geográfica...');
+            setMsg(t('msg_loading_grid'));
             populateMunicipioSelect();
             processMapData();
             loadCurvasBackground(currentUf);
             loadSerieBackground(currentUf);
         },
-        error:()=>{setStatus('Erro ao carregar resumo IDF','bg-red-100 text-red-800');hideLoad();}
+        error:()=>{setStatus(t('status_error_resumo'),'bg-red-100 text-red-800');hideLoad();}
     });
 }
 
 async function loadCurvasBackground(uf){
     if(curvasUfLoaded===uf || curvasLoading) return;
     curvasLoading = true;
-    setCurvasStatus(`Curvas IDF de ${uf}: carregando...`,'bg-yellow-100 text-yellow-800');
+    setCurvasStatus(t('curvas_loading',uf),'bg-yellow-100 text-yellow-800');
     try{
         const resp = await fetch(URL_CURVAS_UF(uf));
         if(!resp.ok) throw new Error('HTTP '+resp.status);
         curvasData = await resp.json();
         curvasUfLoaded = uf;
-        setCurvasStatus(`Curvas IDF de ${uf} prontas ✓`,'bg-green-100 text-green-800');
+        setCurvasStatus(t('curvas_ready',uf),'bg-green-100 text-green-800');
     } catch(err){
         console.error(err);
         curvasData = {};
         curvasUfLoaded = null;
-        setCurvasStatus(`Erro ao carregar curvas IDF de ${uf}`,'bg-red-100 text-red-800');
+        setCurvasStatus(t('curvas_error',uf),'bg-red-100 text-red-800');
     } finally {
         curvasLoading = false;
         if(selectedCode) renderIdfChart(selectedCode);
@@ -371,7 +377,7 @@ async function loadSerieBackground(uf){
 }
 
 // ==========================================
-// SELECT DE MUNICÍPIO (populado a partir do CSV resumo)
+// MUNICIPALITY SELECT (populated from the summary CSV)
 // ==========================================
 function populateMunicipioSelect(){
     const uf = currentUf.toUpperCase();
@@ -383,18 +389,18 @@ function populateMunicipioSelect(){
         }
     });
     options.sort((a,b)=>a.nome.localeCompare(b.nome,'pt-BR'));
-    sel.innerHTML = '<option value="">Selecione um município...</option>' +
+    sel.innerHTML = `<option value="">${t('select_municipality_placeholder')}</option>` +
         options.map(o=>`<option value="${o.code}">${o.nome}</option>`).join('');
 }
 
 // ==========================================
-// PROCESSAMENTO — join por código IBGE
+// PROCESSING — join by IBGE code
 // ==========================================
 async function processMapData(){
     if(!resumoReady) return;
     const uf = currentUf.toUpperCase();
 
-    setStatus('Processando…','bg-blue-100 text-blue-800');
+    setStatus(t('status_processing'),'bg-blue-100 text-blue-800');
 
     const dataMap = new Map();
     const valores = [];
@@ -407,8 +413,8 @@ async function processMapData(){
     quebrasAtuais = calcularQuebras(valores);
 
     try{
-        setStatus('Carregando grade geográfica…','bg-yellow-100 text-yellow-800');
-        setMsg(`Carregando grade de ${uf}…`);
+        setStatus(t('status_loading_grid'),'bg-yellow-100 text-yellow-800');
+        setMsg(t('msg_loading_grid_uf',uf));
 
         const geoData = await fetch(GEO_URL(uf)).then(r=>r.json());
 
@@ -424,10 +430,10 @@ async function processMapData(){
             onEachFeature: (feature, layer) => {
                 const code = (feature.properties.id||'').toString().trim();
                 const d = dataMap.get(code);
-                const nome = (d && d.row.name_muni) || feature.properties.name || 'Desconhecido';
-                const valorFmt = (d && !isNaN(d.valor)) ? d.valor.toLocaleString('pt-BR',{maximumFractionDigits:1}) : 'sem dado';
+                const nome = (d && d.row.name_muni) || feature.properties.name || t('unknown_municipality');
+                const valorFmt = (d && !isNaN(d.valor)) ? d.valor.toLocaleString(numLocale(),{maximumFractionDigits:1}) : t('no_data');
                 layer.bindTooltip(
-                    `<div style="text-align:left"><b style="color:#1e40af">Município:</b> ${nome}<br><b style="color:#1e40af">${METRIC_LABELS[currentMetric]}:</b> ${valorFmt}</div>`,
+                    `<div style="text-align:left"><b style="color:#1e40af">${t('tooltip_municipio_label')}</b> ${nome}<br><b style="color:#1e40af">${METRIC_LABELS[currentMetric]()}:</b> ${valorFmt}</div>`,
                     {sticky:true, className:'custom-tooltip'}
                 );
                 layer.on('click', () => {
@@ -440,18 +446,18 @@ async function processMapData(){
 
         map.fitBounds(geojsonLayer.getBounds());
         drawLegend();
-        setStatus(`${uf} — IDF ✓`,'bg-green-100 text-green-800');
+        setStatus(t('status_ready',uf),'bg-green-100 text-green-800');
         hideLoad();
 
     } catch(err){
         console.error(err);
-        setStatus('Erro ao carregar malha','bg-red-100 text-red-800');
+        setStatus(t('status_error_grid'),'bg-red-100 text-red-800');
         hideLoad();
     }
 }
 
 // ==========================================
-// LEGENDA
+// LEGEND
 // ==========================================
 function drawLegend(){
     document.querySelectorAll('.legend-ctrl').forEach(e=>e.remove());
@@ -460,21 +466,21 @@ function drawLegend(){
         const div=L.DomUtil.create('div','info-map legend-map legend-ctrl');
         let h='';
         for(let i=0;i<RAMPA_CORES.length;i++){
-            const de = quebrasAtuais[i]!==undefined ? quebrasAtuais[i].toLocaleString('pt-BR',{maximumFractionDigits:1}) : '';
+            const de = quebrasAtuais[i]!==undefined ? quebrasAtuais[i].toLocaleString(numLocale(),{maximumFractionDigits:1}) : '';
             h+=`<div style="display:flex;align-items:center;margin-bottom:3px">
                 <div style="width:12px;height:12px;background:${RAMPA_CORES[i]};border:1px solid #333;margin-right:5px;border-radius:2px"></div>
                 <span style="font-size:10px">≥ ${de}</span></div>`;
         }
-        div.innerHTML=`<div style="font-weight:700;font-size:9px;text-transform:uppercase;color:#1e40af;margin-bottom:6px;max-width:150px">${METRIC_LABELS[currentMetric]}<br>${currentUf}</div>${h}`;
+        div.innerHTML=`<div style="font-weight:700;font-size:9px;text-transform:uppercase;color:#1e40af;margin-bottom:6px;max-width:150px">${METRIC_LABELS[currentMetric]()}<br>${currentUf}</div>${h}`;
         return div;
     };
     leg.addTo(map);
 }
 
 // ==========================================
-// PAINEL DE DETALHE DO MUNICÍPIO
+// MUNICIPALITY DETAIL PANEL
 // ==========================================
-const fmt = (v,d=1) => (v===null||v===undefined||isNaN(v)) ? '—' : v.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fmt = (v,d=1) => (v===null||v===undefined||isNaN(v)) ? '—' : v.toLocaleString(numLocale(),{minimumFractionDigits:d,maximumFractionDigits:d});
 
 function badge(text,color,textColor){
     return `<span class="badge" style="background:${color};color:${textColor||'#111'};border:1px solid rgba(0,0,0,.15)">${text}</span>`;
@@ -489,27 +495,27 @@ function indexCard(label,val,unit){
 function showMunicipioDetail(code, nomeFallback){
     selectedCode = code;
     const row = codeToResumo.get(code);
-    const nome = (row && row.name_muni) || nomeFallback || 'Município';
+    const nome = (row && row.name_muni) || nomeFallback || t('unknown_municipality');
 
     document.getElementById('detail-title').textContent = nome;
-    document.getElementById('detail-subtitle').textContent = `Código IBGE: ${code} · ${currentUf}`;
+    document.getElementById('detail-subtitle').textContent = t('ibge_code_label',code,currentUf);
 
     let badges = '', idx = '';
     if(row){
-        badges += badge(`Distribuição: ${row.distribuicao}`, '#dbeafe');
+        badges += badge(t('badge_distribution',row.distribuicao), '#dbeafe');
         badges += badge(`R² = ${fmt(row.idf_r2,4)}`, '#dcfce7');
         if(row.pct_anos_vizinhanca > 0){
-            badges += badge(`${fmt(row.pct_anos_vizinhanca,0)}% dos anos por média de vizinhança`, '#fef3c7');
+            badges += badge(t('badge_neighborhood_pct',fmt(row.pct_anos_vizinhanca,0)), '#fef3c7');
         }
-        idx += indexCard('Chuva máx. diária anual média', fmt(row.chuva_max_media_mm,1), 'mm');
-        idx += indexCard('Intensidade TR=100a, 24h', fmt(row.intensidade_tr100_24h_mm_h,1), 'mm/h');
-        idx += indexCard('Coeficiente k', fmt(row.idf_k,1), '');
-        idx += indexCard('Coeficiente a', fmt(row.idf_a,3), '');
-        idx += indexCard('Coeficiente b', fmt(row.idf_b,2), 'min');
-        idx += indexCard('Coeficiente c', fmt(row.idf_c,3), '');
-        idx += indexCard('Anos de dado', row.n_anos, '');
+        idx += indexCard(t('idx_rain_avg'), fmt(row.chuva_max_media_mm,1), 'mm');
+        idx += indexCard(t('idx_intensity'), fmt(row.intensidade_tr100_24h_mm_h,1), 'mm/h');
+        idx += indexCard(t('idx_coef_k'), fmt(row.idf_k,1), '');
+        idx += indexCard(t('idx_coef_a'), fmt(row.idf_a,3), '');
+        idx += indexCard(t('idx_coef_b'), fmt(row.idf_b,2), 'min');
+        idx += indexCard(t('idx_coef_c'), fmt(row.idf_c,3), '');
+        idx += indexCard(t('idx_years_data'), row.n_anos, '');
     } else {
-        badges = '<span class="text-xs text-slate-400">Sem curva IDF disponível para este município.</span>';
+        badges = `<span class="text-xs text-slate-400">${t('no_idf_curve_available')}</span>`;
     }
     document.getElementById('detail-badges').innerHTML = badges;
     document.getElementById('detail-indices').innerHTML = idx;
@@ -550,7 +556,7 @@ function renderIdfChart(code){
     chartWrap.classList.remove('hidden');
 
     const datasets = PERIODOS_RETORNO.map(tr => ({
-        label: `TR = ${tr} anos`,
+        label: t('chart_tr_label',tr),
         data: dados.duracoes_min.map((d,i) => ({x: d, y: dados.curvas_mm_h[tr][i]})),
         borderColor: CORES_TR[tr],
         backgroundColor: CORES_TR[tr],
@@ -568,8 +574,8 @@ function renderIdfChart(code){
             interaction:{mode:'index',intersect:false},
             plugins:{ legend:{position:'bottom', labels:{boxWidth:12,font:{size:10}}} },
             scales:{
-                x: { type:'logarithmic', title:{display:true,text:'Duração (min)',font:{size:10}} },
-                y: { title:{display:true,text:'Intensidade (mm/h)',font:{size:10}}, beginAtZero:true }
+                x: { type:'logarithmic', title:{display:true,text:t('chart_x_duration'),font:{size:10}} },
+                y: { title:{display:true,text:t('chart_y_intensity'),font:{size:10}}, beginAtZero:true }
             }
         }
     });
@@ -619,7 +625,7 @@ function renderSerieChart(code){
         data: {
             labels: serieAnos,
             datasets: [{
-                label: 'Chuva máxima diária (mm)',
+                label: t('series_dataset_label'),
                 data: serie.valores,
                 backgroundColor: cores,
                 borderRadius: 4,
@@ -633,19 +639,19 @@ function renderSerieChart(code){
                 legend:{display:false},
                 tooltip:{
                     callbacks:{
-                        title: items => `Ano ${items[0].label}`,
+                        title: items => t('tooltip_year_title',items[0].label),
                         label: item => {
                             const ano = serieAnos[item.dataIndex];
                             const v = item.parsed.y;
-                            const base = (v===null||v===undefined) ? 'sem dado' : `${v.toLocaleString('pt-BR',{maximumFractionDigits:1})} mm`;
-                            return anosVizinhanca.has(ano) ? `${base} (estimado por vizinhança)` : base;
+                            const base = (v===null||v===undefined) ? t('tooltip_no_data') : `${v.toLocaleString(numLocale(),{maximumFractionDigits:1})} mm`;
+                            return anosVizinhanca.has(ano) ? `${base} ${t('tooltip_estimated_suffix')}` : base;
                         }
                     }
                 }
             },
             scales:{
-                x: { title:{display:true,text:'Ano',font:{size:10}}, ticks:{maxRotation:0,autoSkip:true,font:{size:9}}, grid:{display:false} },
-                y: { title:{display:true,text:'Chuva máxima diária (mm)',font:{size:10}}, beginAtZero:true, grid:{color:'#e5e7eb'} }
+                x: { title:{display:true,text:t('chart_x_year'),font:{size:10}}, ticks:{maxRotation:0,autoSkip:true,font:{size:9}}, grid:{display:false} },
+                y: { title:{display:true,text:t('chart_y_rain'),font:{size:10}}, beginAtZero:true, grid:{color:'#e5e7eb'} }
             }
         }
     });
@@ -657,7 +663,7 @@ function closeDetail(){
 }
 
 // ==========================================
-// EXPORTAÇÃO CSV DO MUNICÍPIO SELECIONADO
+// CSV EXPORT FOR THE SELECTED MUNICIPALITY
 // ==========================================
 function triggerCsvDownload(filename, csvText){
     const blob = new Blob(['﻿' + csvText], {type: 'text/csv;charset=utf-8;'});
@@ -677,10 +683,10 @@ function slugify(s){
 }
 
 function downloadMunicipioCSV(){
-    if(!selectedCode){ alert('Selecione um município primeiro.'); return; }
+    if(!selectedCode){ alert(t('alert_select_municipality_first')); return; }
     const code = selectedCode;
     const row  = codeToResumo.get(code);
-    if(!row){ alert('Não há curva IDF para este município.'); return; }
+    if(!row){ alert(t('alert_no_idf_curve')); return; }
 
     const nome = row.name_muni || 'municipio';
     const uf   = row.abbrev_state || currentUf;
@@ -709,23 +715,23 @@ function downloadMunicipioCSV(){
     }
 
     const linhas = [];
-    linhas.push('# IDFTec Data — Curvas IDF — dados do município');
-    linhas.push('# Fonte: chuva máxima diária anual 1961-2025, grade Xavier BR-DWGD, via Google Earth Engine');
-    linhas.push('# Bloco 1: coeficientes da equação IDF e variáveis anuais');
+    linhas.push(t('csv_header1'));
+    linhas.push(t('csv_source'));
+    linhas.push(t('csv_block1'));
     linhas.push(Papa.unparse(anual));
     linhas.push('');
-    linhas.push('# Bloco 2: intensidade (mm/h) por duração e período de retorno');
-    linhas.push(curvaRows.length ? Papa.unparse(curvaRows) : '# Curva IDF indisponível (ainda carregando ou sem cobertura para esta UF)');
+    linhas.push(t('csv_block2'));
+    linhas.push(curvaRows.length ? Papa.unparse(curvaRows) : t('csv_block2_unavailable'));
 
     const csvFinal = linhas.join('\n');
     triggerCsvDownload(`idf_${slugify(nome)}_${code}.csv`, csvFinal);
 }
 
 function downloadSerieCSV(){
-    if(!selectedCode){ alert('Selecione um município primeiro.'); return; }
+    if(!selectedCode){ alert(t('alert_select_municipality_first')); return; }
     const code = selectedCode;
     const serie = serieData[code];
-    if(!serie){ alert('Série histórica indisponível para este município (ainda a carregar ou sem cobertura).'); return; }
+    if(!serie){ alert(t('alert_no_series')); return; }
 
     const row = codeToResumo.get(code);
     const nome = serie.nome || (row && row.name_muni) || 'municipio';
@@ -738,16 +744,16 @@ function downloadSerieCSV(){
     }));
 
     const linhas = [];
-    linhas.push('# IDFTec Data — Série histórica de chuva máxima diária anual');
-    linhas.push(`# Município: ${nome} (código IBGE ${code}, ${currentUf})`);
-    linhas.push('# Fonte: chuva máxima diária anual, grade Xavier BR-DWGD, via Google Earth Engine, 1961-2025');
+    linhas.push(t('csv_series_header1'));
+    linhas.push(t('csv_series_municipality',nome,code,currentUf));
+    linhas.push(t('csv_series_source'));
     linhas.push(Papa.unparse(linhasDados));
 
     triggerCsvDownload(`serie_chuva_maxima_${slugify(nome)}_${code}.csv`, linhas.join('\n'));
 }
 
 // ==========================================
-// EVENTOS
+// EVENTS
 // ==========================================
 document.getElementById('stateSelect').addEventListener('change',e=>{
     currentUf=e.target.value;
@@ -777,6 +783,7 @@ document.getElementById('municipioSelect').addEventListener('change',e=>{
 });
 
 window.onload=()=>{
+    applyI18nStatic();
     if(typeof lucide!=='undefined') lucide.createIcons();
     initMap();
     loadResumo();

@@ -1,124 +1,124 @@
 # 🌧️ IDFTec
 
-**Curvas de Intensidade-Duração-Frequência do Brasil, município por município.**
+**Intensity-Duration-Frequency curves for Brazil, municipality by municipality.**
 
-Este repositório reúne os dados, os códigos e a plataforma web desenvolvidos a partir da chuva máxima diária anual (1961–2025) para calcular, para cada um dos 5.569 municípios brasileiros com dado disponível, a sua curva IDF — a ferramenta clássica de engenharia hidrológica usada para dimensionar galerias pluviais, bueiros, canais e qualquer estrutura que precise resistir a um evento de chuva raro sem virar manchete de enchente.
+This repository gathers the data, code, and web platform built from the annual maximum daily rainfall (1961–2025) to compute, for each of the 5,569 Brazilian municipalities with available data, its IDF curve — the classic hydrological engineering tool used to size storm drains, culverts, channels, and any structure that needs to withstand a rare rainfall event without becoming a flood headline.
 
-Se você chegou até aqui por curiosidade, é revisor de periódico conferindo reprodutibilidade, ou só quer saber quantos mm/h sua cidade aguenta antes de alagar — as três motivações são bem-vindas.
+If you got here out of curiosity, you're a journal reviewer checking reproducibility, or you just want to know how many mm/h your city can handle before flooding — all three motivations are welcome.
 
 ---
 
-## 🗺️ Veja no mapa antes de ler o código
+## 🗺️ See it on the map before reading the code
 
-A plataforma **IDFTec Data** deixa explorar os resultados sem abrir uma linha de Python:
+The **IDFTec Data** platform lets you explore the results without opening a single line of Python:
 
 🔗 **[fcoliveira-utfpr.github.io/IDFTec](https://fcoliveira-utfpr.github.io/IDFTec/)**
 
-- Escolha um estado e um município
-- Veja os coeficientes da equação IDF, a distribuição estatística usada e o R² do ajuste
-- Explore o gráfico intensidade × duração para os períodos de retorno de 5 a 100 anos
-- Veja a série histórica de chuva máxima diária anual (1961–2025) em gráfico de barras
-- Colora o mapa do Brasil por intensidade projetada, chuva máxima média, ou pelo coeficiente `k`
-- Baixe os dados do município em CSV (curva IDF e série histórica)
+- Choose a state and a municipality
+- See the IDF equation coefficients, the statistical distribution used, and the fit's R²
+- Explore the intensity × duration chart for return periods from 5 to 100 years
+- See the historical annual maximum daily rainfall series (1961–2025) as a bar chart
+- Color the map of Brazil by projected intensity, average maximum rainfall, or the `k` coefficient
+- Download the municipality's data as CSV (IDF curve and historical series)
 
-Toda a aplicação roda no navegador — sem servidor, sem backend, só HTML/JS e uma dose generosa de `fetch()`.
+The whole application runs in the browser — no server, no backend, just HTML/JS and a generous dose of `fetch()`.
 
 ---
 
-## 🎯 Do que se trata
+## 🎯 What this is about
 
-**5.569 municípios brasileiros. Uma equação, calibrada individualmente para cada um, a partir de 65 anos de dados de satélite.**
+**5,569 Brazilian municipalities. One equation, individually calibrated for each one, from 65 years of satellite data.**
 
 $$I(T, t) = \frac{k \cdot T^{a}}{(t + b)^{c}}$$
 
-onde `I` é a intensidade de chuva (mm/h), `T` o período de retorno (anos) e `t` a duração (minutos). Por trás de cada curva:
+where `I` is the rainfall intensity (mm/h), `T` the return period (years), and `t` the duration (minutes). Behind every curve:
 
-| Etapa | O que acontece |
+| Step | What happens |
 |---|---|
-| **Extração** | Chuva máxima diária anual (1961–2025) extraída via Google Earth Engine da grade Xavier BR-DWGD (0,1°, ~11 km), amostrada no centróide de cada município. |
-| **Preenchimento** | Municípios com centróide sobre um pixel sem dado (tipicamente litorâneos) são reamostrados por média da vizinhança, com raio progressivo. |
-| **Ajuste estatístico** | Seis distribuições de extremos (Gumbel, GEV, Log-Normal, Weibull, Gama, Normal) são testadas por aderência (Kolmogorov-Smirnov); a de melhor ajuste é escolhida por município. |
-| **Desagregação** | A chuva de 1 dia é desagregada em 12 durações (5 min a 24 h) pelos fatores DAEE/CETESB (1980), e os quantis por duração são obtidos escalando analiticamente o quantil de 1 dia — sem reajuste redundante por duração. |
-| **Calibração IDF** | Os coeficientes `k, a, b, c` são calibrados por regressão log-linear com varredura de `b` — método fechado, sem otimizador não-linear nem limites artificiais. |
+| **Extraction** | Annual maximum daily rainfall (1961–2025) extracted via Google Earth Engine from the Xavier BR-DWGD grid (0.1°, ~11 km), sampled at each municipality's centroid. |
+| **Gap filling** | Municipalities whose centroid falls on a pixel without data (typically coastal ones) are resampled using a neighborhood average, with a progressive radius. |
+| **Statistical fitting** | Six extreme-value distributions (Gumbel, GEV, Log-Normal, Weibull, Gamma, Normal) are tested for goodness of fit (Kolmogorov-Smirnov); the best-fitting one is chosen per municipality. |
+| **Disaggregation** | The 1-day rainfall is disaggregated into 12 durations (5 min to 24 h) using the DAEE/CETESB (1980) factors, and the quantiles per duration are obtained by analytically scaling the 1-day quantile — without redundant refitting per duration. |
+| **IDF calibration** | The `k, a, b, c` coefficients are calibrated via log-linear regression with a sweep over `b` — a closed-form method, with no non-linear optimizer or artificial bounds. |
 
-Detalhes completos, incluindo os bugs encontrados e corrigidos ao longo do caminho, estão em [`MEMORIA_PROJETO.md`](MEMORIA_PROJETO.md).
-
----
-
-## ⚠️ Limitação metodológica — leia antes de citar um número
-
-Os coeficientes **`b` e `c`** da equação IDF saem **praticamente constantes em qualquer município do Brasil** (variação < 0,05% testada em municípios de climas completamente diferentes). Isso não é uma descoberta sobre o regime de chuva do país — é consequência de aplicar os **mesmos fatores de desagregação DAEE/CETESB, originalmente regionais de São Paulo, a todos os municípios**. Só **`k`** e **`a`** carregam diferença real entre municípios, vinda da distribuição estatística ajustada à série de chuva de cada um.
-
-Essa e outras ressalvas (teste KS com parâmetros estimados da própria amostra, amostragem no centróide em vez do polígono municipal, R² do ajuste IDF sendo otimista) estão documentadas na íntegra em [`MEMORIA_PROJETO.md`](MEMORIA_PROJETO.md) e destacadas na própria página web.
+Full details, including the bugs found and fixed along the way, are in [`MEMORIA_PROJETO.md`](MEMORIA_PROJETO.md).
 
 ---
 
-## 📦 Estrutura do repositório
+## ⚠️ Methodological limitation — read before citing a number
+
+The **`b` and `c`** coefficients of the IDF equation come out **practically constant across every municipality in Brazil** (variation < 0.05% tested on municipalities with completely different climates). This is not a discovery about the country's rainfall regime — it's a consequence of applying the **same DAEE/CETESB disaggregation factors, originally regional to São Paulo, to every municipality**. Only **`k`** and **`a`** carry a real difference between municipalities, coming from the statistical distribution fitted to each one's rainfall series.
+
+This and other caveats (KS test with parameters estimated from the sample itself, sampling at the centroid instead of the municipal polygon, the IDF fit's R² being optimistic) are documented in full in [`MEMORIA_PROJETO.md`](MEMORIA_PROJETO.md) and highlighted on the website itself.
+
+---
+
+## 📦 Repository structure
 
 ```
 IDFTec/
 │
 ├── 📓 Notebooks
-│   ├── verificacao_centroides_municipios_br.ipynb   # valida o asset de centroides contra o IBGE
-│   ├── chuva_maxima_anual_municipios_xavier.ipynb    # extração via GEE (versão Colab)
-│   └── analise_estatistica_idf_municipios.ipynb      # estatística descritiva, heatmaps, mapas geobr
+│   ├── verificacao_centroides_municipios_br.ipynb   # validates the centroids asset against IBGE
+│   ├── chuva_maxima_anual_municipios_xavier.ipynb    # extraction via GEE (Colab version)
+│   └── analise_estatistica_idf_municipios.ipynb      # descriptive statistics, heatmaps, geobr maps
 │
-├── 🐍 Scripts de processamento
-│   ├── extrair_chuva_maxima.py         # extração via GEE (versão local, sem Colab)
-│   ├── calcular_idf_municipios.py      # ajuste estatístico + calibração IDF, todos os municípios
-│   └── exportar_dados_site.py          # reempacota os resultados para o formato do site
+├── 🐍 Processing scripts
+│   ├── extrair_chuva_maxima.py         # extraction via GEE (local version, no Colab)
+│   ├── calcular_idf_municipios.py      # statistical fitting + IDF calibration, all municipalities
+│   └── exportar_dados_site.py          # repackages the results into the site's format
 │
-├── 📊 Dados
-│   ├── xavier_chuva_maxima_diaria_anual_municipios_1961_2025.json   # chuva máxima anual, bruta
-│   ├── idf_municipios.json                                          # curvas IDF completas
-│   ├── idf_municipios_ignorados.json                                # municípios sem série válida
-│   ├── idf_municipios_resumo.csv                                    # 1 linha/município (mapa + tabela)
-│   ├── idf_uf/{UF}.json                                             # curvas completas, por estado
-│   └── serie_uf/{UF}.json                                           # série histórica anual, por estado
+├── 📊 Data
+│   ├── xavier_chuva_maxima_diaria_anual_municipios_1961_2025.json   # raw annual maximum rainfall
+│   ├── idf_municipios.json                                          # full IDF curves
+│   ├── idf_municipios_ignorados.json                                # municipalities without a valid series
+│   ├── idf_municipios_resumo.csv                                    # 1 row/municipality (map + table)
+│   ├── idf_uf/{UF}.json                                             # full curves, per state
+│   └── serie_uf/{UF}.json                                           # annual historical series, per state
 │
-├── 📝 MEMORIA_PROJETO.md               # histórico completo de decisões, bugs e correções
+├── 📝 MEMORIA_PROJETO.md               # full history of decisions, bugs, and fixes
 │
-└── 🌐 IDFTec Data (aplicação web)
+└── 🌐 IDFTec Data (web application)
     ├── index.html
     └── idf.html
 ```
 
 ---
 
-## 🧮 Como os dados foram gerados, em três frases
+## 🧮 How the data was generated, in three sentences
 
-1. A chuva máxima diária anual (1961–2025) foi extraída da grade Xavier BR-DWGD via Google Earth Engine, amostrada no centróide de cada um dos 5.571 municípios do IBGE (verificado contra a base oficial).
-2. Para cada município, a distribuição de valores extremos com melhor aderência foi ajustada à série de 65 anos, os quantis de chuva de 1 dia foram desagregados em 12 durações e a equação IDF foi calibrada por regressão log-linear.
-3. Os resultados foram consolidados numa tabela municipal e, para a aplicação web, reempacotados num CSV resumo nacional e em JSONs leves por estado — porque ninguém merece esperar o carregamento de um JSON de 16 MB pra ver a curva IDF de um município só.
+1. The annual maximum daily rainfall (1961–2025) was extracted from the Xavier BR-DWGD grid via Google Earth Engine, sampled at the centroid of each of the 5,571 IBGE municipalities (verified against the official database).
+2. For each municipality, the best-fitting extreme-value distribution was fitted to the 65-year series, the 1-day rainfall quantiles were disaggregated into 12 durations, and the IDF equation was calibrated via log-linear regression.
+3. The results were consolidated into a municipal table and, for the web application, repackaged into a national summary CSV and lightweight per-state JSONs — because nobody deserves to wait for a 16 MB JSON to load just to see one municipality's IDF curve.
 
-Este projeto segue o mesmo padrão de arquitetura do repositório irmão [`climas_brasil`](https://github.com/fcoliveira-utfpr/climas_brasil) (ClimaTec Data), reaproveitando a malha municipal do IBGE via [`geodata-br`](https://github.com/tbrugz/geodata-br) e a mesma filosofia de site 100% estático.
+This project follows the same architecture pattern as its sibling repository [`climas_brasil`](https://github.com/fcoliveira-utfpr/climas_brasil) (ClimaTec Data), reusing the IBGE municipal mesh via [`geodata-br`](https://github.com/tbrugz/geodata-br) and the same 100%-static-site philosophy.
 
 ---
 
-## 📖 Como citar
+## 📖 How to cite
 
-Se este repositório ou os dados forem úteis para o seu trabalho, por favor cite:
+If this repository or the data are useful for your work, please cite:
 
 ```
 [Oliveira, F. C. Curvas de Intensidade-Duração-Frequência para o Brasil: uma abordagem
 por unidades político-administrativas. Periódico, v. X, n. X, ano. DOI: [inserir]]
 ```
 
-*(referência completa a ser atualizada após publicação)*
+*(full reference to be updated after publication)*
 
 ---
 
-## 🙏 Agradecimentos
+## 🙏 Acknowledgments
 
-UTFPR — Campus Santa Helena
+UTFPR — Santa Helena Campus
 
 ---
 
-## 📬 Contato
+## 📬 Contact
 
-Fabrício Correia de Oliveira — UTFPR, Campus Santa Helena
+Fabrício Correia de Oliveira — UTFPR, Santa Helena Campus
 `fcoliveira@utfpr.edu.br`
 
 ---
 
-*Feito com Python, JavaScript, Earth Engine e a convicção teimosa de que todo bug tem uma causa raiz encontrável — mesmo quando ela está escondida atrás de três camadas de reajuste estatístico redundante.*
+*Made with Python, JavaScript, Earth Engine, and the stubborn conviction that every bug has a findable root cause — even when it's hiding behind three layers of redundant statistical refitting.*

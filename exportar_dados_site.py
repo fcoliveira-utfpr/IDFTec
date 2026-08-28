@@ -1,14 +1,15 @@
-"""Reempacota os resultados (idf_municipios.json + série bruta) no formato
-usado pelo site estático IDFTec Data — mesmo padrão do climas_brasil
-(fcoliveira-utfpr/climas_brasil): um CSV resumo (para o mapa/tabela) e um
-JSON leve por UF (para os gráficos, carregado sob demanda ao trocar de estado).
+"""Repackages the results (idf_municipios.json + raw series) into the format
+used by the IDFTec Data static site — same pattern as climas_brasil
+(fcoliveira-utfpr/climas_brasil): a summary CSV (for the map/table) and a
+lightweight per-state JSON (for the charts, loaded on demand when switching
+states).
 
-Gera:
-    idf_municipios_resumo.csv   — 1 linha por município (mapa + cards de índice)
-    idf_uf/{UF}.json            — curvas IDF completas por município daquela UF
-    serie_uf/{UF}.json          — série histórica anual (chuva máx. diária) por município
+Generates:
+    idf_municipios_resumo.csv   — 1 row per municipality (map + index cards)
+    idf_uf/{UF}.json            — full IDF curves per municipality of that state
+    serie_uf/{UF}.json          — annual historical series (max daily rainfall) per municipality
 
-Uso:
+Usage:
     python exportar_dados_site.py
 """
 
@@ -21,9 +22,9 @@ BASE = Path(__file__).parent
 DURACOES_MIN = [5, 10, 15, 20, 25, 30, 60, 360, 480, 600, 720, 1440]
 PERIODOS_RETORNO = ['5', '10', '25', '50', '100']
 
-# O código IBGE já contém o código do estado nos 2 primeiros dígitos — usado
-# como fallback para o único registro com UF vazia no asset de centroides
-# (Boa Esperança do Norte, MT, ver MEMORIA_PROJETO.md).
+# The IBGE code already contains the state code in its first 2 digits — used
+# as a fallback for the single record with an empty state in the centroid
+# asset (Boa Esperança do Norte, MT, see MEMORIA_PROJETO.md).
 CODIGO_UF = {
     '11': 'RO', '12': 'AC', '13': 'AM', '14': 'RR', '15': 'PA', '16': 'AP', '17': 'TO',
     '21': 'MA', '22': 'PI', '23': 'CE', '24': 'RN', '25': 'PB', '26': 'PE', '27': 'AL', '28': 'SE', '29': 'BA',
@@ -94,7 +95,7 @@ def main():
             'idf_c': round(r['idf']['c'], 4),
             'idf_r2': round(r['idf']['r2'], 4),
             'intensidade_tr100_24h_mm_h': round(r['quantis_mm_h']['1440 min']['100'], 2),
-            'chuva_max_media_mm': None,  # preenchido abaixo
+            'chuva_max_media_mm': None,  # filled in below
             'pct_anos_vizinhanca': pct_vizinhanca,
         })
 
@@ -110,7 +111,7 @@ def main():
             'curvas_mm_h': curvas,
         }
 
-    # Chuva máxima diária anual média — calculada direto da série bruta
+    # Average annual maximum daily rainfall — computed directly from the raw series
     soma = defaultdict(float)
     conta = defaultdict(int)
     for r in registros_brutos:
