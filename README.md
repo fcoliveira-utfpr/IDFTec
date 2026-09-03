@@ -1,4 +1,4 @@
-# 🌧️ IDFTec
+# 🌧️ IDFTec Data
 
 **Intensity-Duration-Frequency curves for Brazil, municipality by municipality.**
 
