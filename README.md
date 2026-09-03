@@ -45,14 +45,6 @@ Full details, including the bugs found and fixed along the way, are in [`MEMORIA
 
 ---
 
-## ⚠️ Methodological limitation — read before citing a number
-
-The **`b` and `c`** coefficients of the IDF equation come out **practically constant across every municipality in Brazil** (variation < 0.05% tested on municipalities with completely different climates). This is not a discovery about the country's rainfall regime — it's a consequence of applying the **same DAEE/CETESB disaggregation factors, originally regional to São Paulo, to every municipality**. Only **`k`** and **`a`** carry a real difference between municipalities, coming from the statistical distribution fitted to each one's rainfall series.
-
-This and other caveats (KS test with parameters estimated from the sample itself, sampling at the centroid instead of the municipal polygon, the IDF fit's R² being optimistic) are documented in full in [`MEMORIA_PROJETO.md`](MEMORIA_PROJETO.md) and highlighted on the website itself.
-
----
-
 ## 📦 Repository structure
 
 ```
@@ -100,8 +92,7 @@ This project follows the same architecture pattern as its sibling repository [`c
 If this repository or the data are useful for your work, please cite:
 
 ```
-[Oliveira, F. C. Curvas de Intensidade-Duração-Frequência para o Brasil: uma abordagem
-por unidades político-administrativas. Periódico, v. X, n. X, ano. DOI: [inserir]]
+[Oliveira, F. C. Intensity-Duration-Frequency Curves for Brazil: An Approach Based on Political-Administrative Units. Paperco, v. X, n. X, ano. DOI: [inserir]]
 ```
 
 *(full reference to be updated after publication)*
