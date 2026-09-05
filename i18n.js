@@ -57,7 +57,7 @@ const I18N = {
     chart_loading_series: 'Loading historical series...',
     chart_empty_series: 'No historical series available for this municipality.',
     series_note: 'Light bars: year estimated from neighborhood average (municipality pixel without direct data).',
-    warning_text2_html: 'The <b>b</b> and <b>c</b> coefficients of the IDF equation are nearly constant across all of Brazil — an effect of the DAEE/CETESB disaggregation factors (regional, from São Paulo) applied nationwide, not a real difference in sub-daily rainfall regime between municipalities. Only <b>k</b> and <b>a</b> actually vary. See details in the repository.',
+    warning_text2_html: 'The <b>b</b> and <b>c</b> coefficients of the IDF equation are nearly constant across all of Brazil — an effect of the DAEE/CETESB disaggregation factors (regional, from São Paulo) applied nationwide.',
 
     // idf.html dynamic strings
     msg_loading_resumo: 'Loading IDF curve summary...',
@@ -163,7 +163,7 @@ const I18N = {
     chart_loading_series: 'Carregando série histórica...',
     chart_empty_series: 'Sem série histórica disponível para este município.',
     series_note: 'Barras claras: ano estimado por média da vizinhança (pixel do município sem dado direto).',
-    warning_text2_html: 'Os coeficientes <b>b</b> e <b>c</b> da equação IDF são praticamente constantes em todo o Brasil — efeito dos fatores de desagregação DAEE/CETESB (regionais, de SP) aplicados nacionalmente, não uma diferença real de regime de chuva sub-diária entre municípios. Só <b>k</b> e <b>a</b> variam de fato. Ver detalhes no repositório.',
+    warning_text2_html: 'Os coeficientes <b>b</b> e <b>c</b> da equação IDF são praticamente constantes em todo o Brasil — efeito dos fatores de desagregação DAEE/CETESB (regionais, de SP) aplicados nacionalmente.',
 
     msg_loading_resumo: 'Carregando resumo das curvas IDF...',
     msg_loading_grid: 'Carregando grade geográfica...',
