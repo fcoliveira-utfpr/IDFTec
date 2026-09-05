@@ -30,7 +30,7 @@ const I18N = {
     stat4_value: '0.999',
     stat4_label: 'average R² of the IDF fit',
     data_source: 'Data: annual maximum daily rainfall 1961–2025 (Xavier BR-DWGD, via Google Earth Engine) · Mesh: IBGE via geodata-br',
-    warning_text_html: 'The <b>b</b> and <b>c</b> coefficients of the IDF equation come out nearly constant across all of Brazil — an effect of the DAEE/CETESB disaggregation factors (regional, from São Paulo) applied nationwide due to the lack of available regionalized factors, not a real finding about the sub-daily rainfall regime of each region. See the full methodological limitations in the repository.',
+    warning_text_html: 'The <b>b</b> and <b>c</b> coefficients of the IDF equation come out nearly constant across all of Brazil — an effect of the DAEE/CETESB disaggregation factors (regional, from São Paulo) applied nationwide.',
 
     // idf.html
     idf_page_title: 'IDFTec Data — IDF Curves by Municipality',
@@ -137,7 +137,7 @@ const I18N = {
     stat4_value: '0,999',
     stat4_label: 'R² médio do ajuste IDF',
     data_source: 'Dados: chuva máxima diária anual 1961–2025 (Xavier BR-DWGD, via Google Earth Engine) · Malha: IBGE via geodata-br',
-    warning_text_html: 'Os coeficientes <b>b</b> e <b>c</b> da equação IDF saem praticamente constantes em todo o Brasil — efeito dos fatores de desagregação DAEE/CETESB (regionais, de SP) aplicados nacionalmente por falta de fatores regionalizados disponíveis, não uma descoberta real sobre o regime de chuva sub-diária de cada região. Ver limitações metodológicas completas no repositório.',
+    warning_text_html: 'Os coeficientes <b>b</b> e <b>c</b> da equação IDF saem praticamente constantes em todo o Brasil — efeito dos fatores de desagregação DAEE/CETESB (regionais, de SP) aplicados nacionalmente.',
 
     idf_page_title: 'IDFTec Data — Curvas IDF por Município',
     header_subtitle2: 'Curvas Intensidade-Duração-Frequência por Município',
