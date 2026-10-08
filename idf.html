@@ -177,6 +177,10 @@
                             <span class="inline-block w-2 h-2 rounded-sm align-middle" style="background:#93c5fd"></span>
                             <span data-i18n="series_note">Light bars: year estimated from neighborhood average (municipality pixel without direct data).</span>
                         </p>
+                        <p id="serie-chart-note-qc" class="hidden text-[10px] text-slate-400 mt-1">
+                            <span class="inline-block w-2 h-2 rounded-sm align-middle" style="background:#d1d5db"></span>
+                            <span data-i18n="series_note_qc">Grey bars: year excluded by quality control (affected by a rain gauge with monthly totals recorded as daily rainfall) and not used in the IDF curve.</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -320,6 +324,7 @@ function loadResumo(){
                 row.intensidade_tr100_24h_mm_h = parseFloat(row.intensidade_tr100_24h_mm_h);
                 row.chuva_max_media_mm = parseFloat(row.chuva_max_media_mm);
                 row.pct_anos_vizinhanca = parseFloat(row.pct_anos_vizinhanca);
+                row.n_anos_excluidos_qc = parseInt(row.n_anos_excluidos_qc || 0, 10);
                 codeToResumo.set(c,row);
             });
             resumoReady = true;
@@ -506,6 +511,9 @@ function showMunicipioDetail(code, nomeFallback){
         if(row.pct_anos_vizinhanca > 0){
             badges += badge(t('badge_neighborhood_pct',fmt(row.pct_anos_vizinhanca,0)), '#fef3c7');
         }
+        if(row.n_anos_excluidos_qc > 0){
+            badges += badge(t('badge_qc_excluded',row.n_anos_excluidos_qc), '#fee2e2');
+        }
         idx += indexCard(t('idx_rain_avg'), fmt(row.chuva_max_media_mm,1), 'mm');
         idx += indexCard(t('idx_intensity'), fmt(row.intensidade_tr100_24h_mm_h,1), 'mm/h');
         idx += indexCard(t('idx_coef_k'), fmt(row.idf_k,1), '');
@@ -611,11 +619,14 @@ function renderSerieChart(code){
     wrap.classList.remove('hidden');
 
     const anosVizinhanca = new Set(serie.anos_vizinhanca || []);
+    const anosQc = new Set(serie.anos_excluidos_qc || []);
     note.classList.toggle('hidden', anosVizinhanca.size===0);
+    document.getElementById('serie-chart-note-qc').classList.toggle('hidden', anosQc.size===0);
 
     const COR_BASE = '#2563eb';
     const COR_ESTIMADO = '#93c5fd';
-    const cores = serieAnos.map(a => anosVizinhanca.has(a) ? COR_ESTIMADO : COR_BASE);
+    const COR_EXCLUIDO = '#d1d5db';
+    const cores = serieAnos.map(a => anosQc.has(a) ? COR_EXCLUIDO : anosVizinhanca.has(a) ? COR_ESTIMADO : COR_BASE);
 
     if(serieChart) serieChart.destroy();
     const ctx = document.getElementById('serieChart').getContext('2d');
@@ -643,6 +654,7 @@ function renderSerieChart(code){
                             const ano = serieAnos[item.dataIndex];
                             const v = item.parsed.y;
                             const base = (v===null||v===undefined) ? t('tooltip_no_data') : `${v.toLocaleString(numLocale(),{maximumFractionDigits:1})} mm`;
+                            if(anosQc.has(ano)) return `${base} ${t('tooltip_qc_suffix')}`;
                             return anosVizinhanca.has(ano) ? `${base} ${t('tooltip_estimated_suffix')}` : base;
                         }
                     }
@@ -701,6 +713,7 @@ function downloadMunicipioCSV(){
         intensidade_tr100_24h_mm_h: fmt(row.intensidade_tr100_24h_mm_h,2),
         pct_anos_por_media_vizinhanca: fmt(row.pct_anos_vizinhanca,1),
         n_anos: row.n_anos,
+        n_anos_excluidos_controle_qualidade: row.n_anos_excluidos_qc || 0,
     }];
 
     const dados = curvasData[code];
@@ -735,11 +748,13 @@ function downloadSerieCSV(){
     const row = codeToResumo.get(code);
     const nome = serie.nome || (row && row.name_muni) || 'municipio';
     const anosVizinhanca = new Set(serie.anos_vizinhanca || []);
+    const anosQc = new Set(serie.anos_excluidos_qc || []);
 
     const linhasDados = serieAnos.map((ano,i) => ({
         ano,
         chuva_maxima_diaria_mm: (serie.valores[i]===null||serie.valores[i]===undefined) ? '' : serie.valores[i],
         metodo: anosVizinhanca.has(ano) ? 'media_vizinhanca_20km' : 'centroide',
+        excluido_controle_qualidade: anosQc.has(ano) ? 1 : 0,
     }));
 
     const linhas = [];

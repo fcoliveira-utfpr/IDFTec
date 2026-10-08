@@ -37,6 +37,7 @@ where `I` is the rainfall intensity (mm/h), `T` the return period (years), and `
 |---|---|
 | **Extraction** | Annual maximum daily rainfall (1961–2025) extracted via Google Earth Engine from the Xavier BR-DWGD grid (0.1°, ~11 km), sampled at each municipality's centroid. |
 | **Gap filling** | Municipalities whose centroid falls on a pixel without data (typically coastal ones) are resampled using a neighborhood average, with a progressive radius. |
+| **Quality control** | The gridded maxima are screened against the 14,170 rain gauges used to build the grid. Gauge-years with monthly totals recorded as daily rainfall (one gauge persistently, 1961–1998, plus 33 isolated gauge-years) contaminate 968 municipality-years in 61 municipalities, which are removed before fitting and flagged on the map. |
 | **Statistical fitting** | Six extreme-value distributions (Gumbel, GEV, Log-Normal, Weibull, Gamma, Normal) are tested for goodness of fit (Kolmogorov-Smirnov); the best-fitting one is chosen per municipality. |
 | **Disaggregation** | The 1-day rainfall is disaggregated into 12 durations (5 min to 24 h) using the DAEE/CETESB (1980) factors, and the quantiles per duration are obtained by analytically scaling the 1-day quantile — without redundant refitting per duration. |
 | **IDF calibration** | The `k, a, b, c` coefficients are calibrated via log-linear regression with a sweep over `b` — a closed-form method, with no non-linear optimizer or artificial bounds. |
@@ -53,10 +54,13 @@ IDFTec/
 ├── 📓 Notebooks
 │   ├── verificacao_centroides_municipios_br.ipynb   # validates the centroids asset against IBGE
 │   ├── chuva_maxima_anual_municipios_xavier.ipynb    # extraction via GEE (Colab version)
-│   └── analise_estatistica_idf_municipios.ipynb      # descriptive statistics, heatmaps, geobr maps
+│   ├── analise_estatistica_idf_municipios.ipynb      # descriptive statistics, heatmaps, geobr maps
+│   └── controle_qualidade_grade.ipynb                # grid vs source gauges, excluded years, trends
 │
 ├── 🐍 Processing scripts
 │   ├── extrair_chuva_maxima.py         # extraction via GEE (local version, no Colab)
+│   ├── controle_qualidade_estacoes.py  # quality control against the BR-DWGD source gauges (needs pr.npz)
+│   ├── figura_fluxo_trabalho.py        # workflow diagram (paper Fig. 1)
 │   ├── calcular_idf_municipios.py      # statistical fitting + IDF calibration, all municipalities
 │   └── exportar_dados_site.py          # repackages the results into the site's format
 │
@@ -66,7 +70,8 @@ IDFTec/
 │   ├── idf_municipios_ignorados.json                                # municipalities without a valid series
 │   ├── idf_municipios_resumo.csv                                    # 1 row/municipality (map + table)
 │   ├── idf_uf/{UF}.json                                             # full curves, per state
-│   └── serie_uf/{UF}.json                                           # annual historical series, per state
+│   ├── serie_uf/{UF}.json                                           # annual historical series, per state
+│   └── qc/                                                          # quality-control outputs (excluded years, gauge maxima, grid–gauge pairs, trends)
 │
 ├── 📝 MEMORIA_PROJETO.md               # full history of decisions, bugs, and fixes
 │

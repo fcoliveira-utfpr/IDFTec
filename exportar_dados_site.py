@@ -9,6 +9,9 @@ Generates:
     idf_uf/{UF}.json            — full IDF curves per municipality of that state
     serie_uf/{UF}.json          — annual historical series (max daily rainfall) per municipality
 
+Years removed by the quality control (qc/anos_excluidos.json) are kept in the
+series files, flagged in `anos_excluidos_qc`, and left out of the mean.
+
 Usage:
     python exportar_dados_site.py
 """
@@ -38,7 +41,16 @@ def corrigir_uf(codigo_ibge, uf):
     return uf if uf else CODIGO_UF.get(codigo_ibge[:2], uf)
 
 
+def carregar_anos_excluidos():
+    caminho = BASE / 'qc' / 'anos_excluidos.json'
+    if not caminho.exists():
+        return {}
+    with open(caminho, encoding='utf-8') as f:
+        return {c: set(info['anos']) for c, info in json.load(f)['municipios'].items()}
+
+
 def main():
+    anos_excluidos = carregar_anos_excluidos()
     with open(BASE / 'xavier_chuva_maxima_diaria_anual_municipios_1961_2025.json', encoding='utf-8') as f:
         registros_brutos = json.load(f)
 
@@ -68,9 +80,11 @@ def main():
         if r['metodo'] != 'centroide':
             serie['anos_vizinhanca'].append(r['ano'])
     for uf, municipios in uf_para_serie.items():
-        for serie in municipios.values():
+        for codigo, serie in municipios.items():
             if not serie['anos_vizinhanca']:
                 del serie['anos_vizinhanca']
+            if codigo in anos_excluidos:
+                serie['anos_excluidos_qc'] = sorted(anos_excluidos[codigo])
 
     with open(BASE / 'idf_municipios.json', encoding='utf-8') as f:
         idf_registros = json.load(f)
@@ -97,6 +111,7 @@ def main():
             'intensidade_tr100_24h_mm_h': round(r['quantis_mm_h']['1440 min']['100'], 2),
             'chuva_max_media_mm': None,  # filled in below
             'pct_anos_vizinhanca': pct_vizinhanca,
+            'n_anos_excluidos_qc': len(anos_excluidos.get(codigo, ())),
         })
 
         curvas = {tr: [round(r['quantis_mm_h'][f'{d} min'][tr], 2) for d in DURACOES_MIN] for tr in PERIODOS_RETORNO}
@@ -115,6 +130,8 @@ def main():
     soma = defaultdict(float)
     conta = defaultdict(int)
     for r in registros_brutos:
+        if r['ano'] in anos_excluidos.get(r['codigo_ibge'], ()):
+            continue
         if r['chuva_max_diaria_mm'] is not None:
             soma[r['codigo_ibge']] += r['chuva_max_diaria_mm']
             conta[r['codigo_ibge']] += 1
@@ -125,7 +142,7 @@ def main():
 
     campos = ['code_muni', 'name_muni', 'abbrev_state', 'n_anos', 'distribuicao',
               'idf_k', 'idf_a', 'idf_b', 'idf_c', 'idf_r2',
-              'intensidade_tr100_24h_mm_h', 'chuva_max_media_mm', 'pct_anos_vizinhanca']
+              'intensidade_tr100_24h_mm_h', 'chuva_max_media_mm', 'pct_anos_vizinhanca', 'n_anos_excluidos_qc']
     caminho_csv = BASE / 'idf_municipios_resumo.csv'
     with open(caminho_csv, 'w', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=campos)

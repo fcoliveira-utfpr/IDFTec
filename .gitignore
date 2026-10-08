@@ -2,3 +2,16 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+# Overleaf manuscript (kept local)
+IDF Curves for Brazil_v2/
+*.zip
+
+# figures written by analise_estatistica_idf_municipios.ipynb (copied into the manuscript)
+/annual_max_daily_rainfall_histograms.png
+/rainfall_boxplot_by_uf.png
+/idf_fit_metrics_by_uf.png
+/distribuicoes_mapas_brasil.png
+/idf_coefficients_by_uf.png
+/predominant_distribution_map.png
+/mean_annual_max_daily_rainfall_map.png

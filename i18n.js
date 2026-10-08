@@ -57,6 +57,7 @@ const I18N = {
     chart_loading_series: 'Loading historical series...',
     chart_empty_series: 'No historical series available for this municipality.',
     series_note: 'Light bars: year estimated from neighborhood average (municipality pixel without direct data).',
+    series_note_qc: 'Grey bars: year excluded by quality control (affected by a rain gauge with monthly totals recorded as daily rainfall) and not used in the IDF curve.',
     warning_text2_html: 'The <b>b</b> and <b>c</b> coefficients of the IDF equation are nearly constant across all of Brazil — an effect of the DAEE/CETESB disaggregation factors (regional, from São Paulo) applied nationwide.',
 
     // idf.html dynamic strings
@@ -75,6 +76,7 @@ const I18N = {
     tooltip_municipio_label: 'Municipality:',
     badge_distribution: d => `Distribution: ${d}`,
     badge_neighborhood_pct: p => `${p}% of years by neighborhood average`,
+    badge_qc_excluded: n => `${n} years excluded by quality control`,
     idx_rain_avg: 'Avg. annual max daily rainfall',
     idx_intensity: 'Intensity TR=100y, 24h',
     idx_coef_k: 'Coefficient k',
@@ -97,6 +99,7 @@ const I18N = {
     tooltip_year_title: y => `Year ${y}`,
     tooltip_no_data: 'no data',
     tooltip_estimated_suffix: '(estimated from neighborhood)',
+    tooltip_qc_suffix: '(excluded by quality control)',
 
     alert_select_municipality_first: 'Select a municipality first.',
     alert_no_idf_curve: 'No IDF curve for this municipality.',
@@ -163,6 +166,7 @@ const I18N = {
     chart_loading_series: 'Carregando série histórica...',
     chart_empty_series: 'Sem série histórica disponível para este município.',
     series_note: 'Barras claras: ano estimado por média da vizinhança (pixel do município sem dado direto).',
+    series_note_qc: 'Barras cinza: ano excluído pelo controle de qualidade (afetado por um pluviômetro com totais mensais registrados como chuva diária) e não usado na curva IDF.',
     warning_text2_html: 'Os coeficientes <b>b</b> e <b>c</b> da equação IDF são praticamente constantes em todo o Brasil — efeito dos fatores de desagregação DAEE/CETESB (regionais, de SP) aplicados nacionalmente.',
 
     msg_loading_resumo: 'Carregando resumo das curvas IDF...',
@@ -180,6 +184,7 @@ const I18N = {
     tooltip_municipio_label: 'Município:',
     badge_distribution: d => `Distribuição: ${d}`,
     badge_neighborhood_pct: p => `${p}% dos anos por média de vizinhança`,
+    badge_qc_excluded: n => `${n} anos excluídos pelo controle de qualidade`,
     idx_rain_avg: 'Chuva máx. diária anual média',
     idx_intensity: 'Intensidade TR=100a, 24h',
     idx_coef_k: 'Coeficiente k',
@@ -202,6 +207,7 @@ const I18N = {
     tooltip_year_title: y => `Ano ${y}`,
     tooltip_no_data: 'sem dado',
     tooltip_estimated_suffix: '(estimado por vizinhança)',
+    tooltip_qc_suffix: '(excluído pelo controle de qualidade)',
 
     alert_select_municipality_first: 'Selecione um município primeiro.',
     alert_no_idf_curve: 'Não há curva IDF para este município.',

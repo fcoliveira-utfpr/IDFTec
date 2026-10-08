@@ -7,6 +7,10 @@ goodness-of-fit testing, daily rainfall disaggregation via the DAEE/CETESB
 factors, and IDF equation calibration), running in batch for every municipality
 and saving a single static JSON (intended use: page on GitHub Pages).
 
+Years flagged by `controle_qualidade_estacoes.py` (qc/anos_excluidos.json,
+municipalities contaminated by a rain gauge with monthly totals recorded as
+daily rainfall) are removed from the series before fitting.
+
 Usage:
     python calcular_idf_municipios.py
     python calcular_idf_municipios.py --entrada outro_arquivo.json --limite 20
@@ -29,6 +33,7 @@ ANO_INICIAL_PADRAO = 1961
 ANO_FINAL_PADRAO = 2025
 
 MIN_ANOS_VALIDOS = 20  # minimum number of years with data required to attempt distribution/IDF fitting
+ARQ_ANOS_EXCLUIDOS_PADRAO = 'qc/anos_excluidos.json'
 
 DISTRIBUICOES = {
     'Gumbel': stats.gumbel_r,
@@ -71,9 +76,19 @@ def d_critico(n, alpha=0.05):
     return 1.36 / math.sqrt(n)
 
 
-def carregar_series_por_municipio(caminho_json):
+def carregar_anos_excluidos(caminho):
+    """{codigo_ibge: set(anos)} from the quality-control output; empty if the file is absent."""
+    if not caminho or not Path(caminho).exists():
+        return {}
+    with open(caminho, encoding='utf-8') as arquivo:
+        qc = json.load(arquivo)
+    return {codigo: set(info['anos']) for codigo, info in qc['municipios'].items()}
+
+
+def carregar_series_por_municipio(caminho_json, anos_excluidos=None):
     with open(caminho_json, encoding='utf-8') as arquivo:
         registros = json.load(arquivo)
+    anos_excluidos = anos_excluidos or {}
 
     municipios = {}
     for registro in registros:
@@ -85,7 +100,10 @@ def carregar_series_por_municipio(caminho_json):
                 'uf': registro['uf'],
                 'anos': [],
                 'chuva': [],
+                'anos_excluidos_qc': sorted(anos_excluidos.get(codigo, ())),
             }
+        if registro['ano'] in anos_excluidos.get(codigo, ()):
+            continue
         if valor is not None:
             municipios[codigo]['anos'].append(registro['ano'])
             municipios[codigo]['chuva'].append(float(valor))
@@ -268,6 +286,7 @@ def processar_municipio(codigo, dados):
         'nome_municipio': dados['nome_municipio'],
         'uf': dados['uf'],
         'n_anos': len(serie),
+        'anos_excluidos_qc': dados['anos_excluidos_qc'],
         'distribuicao': escolhida['nome'],
         'ks_d': float(escolhida['D']),
         'ks_p_valor': float(escolhida['p']),
@@ -284,6 +303,8 @@ def main():
         help='JSON gerado pelo notebook de extração (padrão: %(default)s)',
     )
     parser.add_argument('--saida', default='idf_municipios.json', help='JSON de saída (padrão: %(default)s)')
+    parser.add_argument('--anos-excluidos', default=ARQ_ANOS_EXCLUIDOS_PADRAO,
+                        help='JSON do controle de qualidade com anos a remover por município (padrão: %(default)s; "" desativa)')
     parser.add_argument('--limite', type=int, default=None, help='processar só os N primeiros municípios (teste rápido)')
     parser.add_argument('--checkpoint-a-cada', type=int, default=200, help='regravar o JSON a cada N municípios processados')
     args = parser.parse_args()
@@ -294,7 +315,10 @@ def main():
         sys.exit(1)
 
     print(f'Carregando {caminho_entrada} ...')
-    municipios = carregar_series_por_municipio(caminho_entrada)
+    anos_excluidos = carregar_anos_excluidos(args.anos_excluidos)
+    if anos_excluidos:
+        print(f'Controle de qualidade: anos excluídos em {len(anos_excluidos)} municípios ({args.anos_excluidos}).')
+    municipios = carregar_series_por_municipio(caminho_entrada, anos_excluidos)
     print(f'{len(municipios)} municípios encontrados no arquivo de entrada.')
 
     codigos = list(municipios.keys())

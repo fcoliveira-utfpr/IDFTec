@@ -1,0 +1,1842 @@
+{
+ "estacoes_sinalizadas": [
+  {
+   "id": "1166000",
+   "lat": -11.01669979095459,
+   "lon": -66.08329772949219,
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "dias_chuva_mediana": 11.0,
+   "maxima_mediana_mm": 336.5
+  }
+ ],
+ "estacao_anos_isolados": [
+  {
+   "id": "1040008",
+   "lat": -10.010000228881836,
+   "lon": -40.690799713134766,
+   "ano": 1979,
+   "dias_chuva": 19,
+   "maxima_mm": 401.0
+  },
+  {
+   "id": "1040008",
+   "lat": -10.010000228881836,
+   "lon": -40.690799713134766,
+   "ano": 1983,
+   "dias_chuva": 14,
+   "maxima_mm": 402.25
+  },
+  {
+   "id": "1040015",
+   "lat": -10.949999809265137,
+   "lon": -40.93330001831055,
+   "ano": 1977,
+   "dias_chuva": 22,
+   "maxima_mm": 221.625
+  },
+  {
+   "id": "1061004",
+   "lat": -10.862799644470215,
+   "lon": -61.95669937133789,
+   "ano": 2006,
+   "dias_chuva": 10,
+   "maxima_mm": 419.5
+  },
+  {
+   "id": "1064000",
+   "lat": -10.440799713134766,
+   "lon": -64.12640380859375,
+   "ano": 2006,
+   "dias_chuva": 12,
+   "maxima_mm": 419.25
+  },
+  {
+   "id": "1065007",
+   "lat": -10.789199829101562,
+   "lon": -65.28060150146484,
+   "ano": 2006,
+   "dias_chuva": 12,
+   "maxima_mm": 296.25
+  },
+  {
+   "id": "1145014",
+   "lat": -11.852499961853027,
+   "lon": -45.12220001220703,
+   "ano": 2013,
+   "dias_chuva": 24,
+   "maxima_mm": 206.39999389648438
+  },
+  {
+   "id": "1146014",
+   "lat": -11.816100120544434,
+   "lon": -46.787498474121094,
+   "ano": 2022,
+   "dias_chuva": 20,
+   "maxima_mm": 392.0
+  },
+  {
+   "id": "1161005",
+   "lat": -11.483599662780762,
+   "lon": -61.379398345947266,
+   "ano": 2006,
+   "dias_chuva": 12,
+   "maxima_mm": 314.5
+  },
+  {
+   "id": "1162002",
+   "lat": -11.68809986114502,
+   "lon": -62.719200134277344,
+   "ano": 2006,
+   "dias_chuva": 11,
+   "maxima_mm": 308.25
+  },
+  {
+   "id": "1168002",
+   "lat": -11.08329963684082,
+   "lon": -68.86669921875,
+   "ano": 2001,
+   "dias_chuva": 11,
+   "maxima_mm": 337.5
+  },
+  {
+   "id": "1260003",
+   "lat": -12.770000457763672,
+   "lon": -60.094200134277344,
+   "ano": 2006,
+   "dias_chuva": 11,
+   "maxima_mm": 440.75
+  },
+  {
+   "id": "1264001",
+   "lat": -12.431099891662598,
+   "lon": -64.23190307617188,
+   "ano": 2006,
+   "dias_chuva": 11,
+   "maxima_mm": 428.25
+  },
+  {
+   "id": "1362000",
+   "lat": -13.085000038146973,
+   "lon": -62.278099060058594,
+   "ano": 2006,
+   "dias_chuva": 11,
+   "maxima_mm": 330.0
+  },
+  {
+   "id": "1557003",
+   "lat": -15.642200469970703,
+   "lon": -57.474998474121094,
+   "ano": 2010,
+   "dias_chuva": 23,
+   "maxima_mm": 203.10000610351562
+  },
+  {
+   "id": "1651017",
+   "lat": -16.55500030517578,
+   "lon": -51.29280090332031,
+   "ano": 2025,
+   "dias_chuva": 23,
+   "maxima_mm": 343.20001220703125
+  },
+  {
+   "id": "1656003",
+   "lat": -16.921100616455078,
+   "lon": -56.22359848022461,
+   "ano": 1984,
+   "dias_chuva": 3,
+   "maxima_mm": 217.375
+  },
+  {
+   "id": "1657002",
+   "lat": -16.733600616455078,
+   "lon": -57.750301361083984,
+   "ano": 2011,
+   "dias_chuva": 16,
+   "maxima_mm": 299.29998779296875
+  },
+  {
+   "id": "1956008",
+   "lat": -19.35919952392578,
+   "lon": -56.40919876098633,
+   "ano": 2009,
+   "dias_chuva": 21,
+   "maxima_mm": 205.125
+  },
+  {
+   "id": "2040048",
+   "lat": -20.06060028076172,
+   "lon": -40.6432991027832,
+   "ano": 2016,
+   "dias_chuva": 23,
+   "maxima_mm": 208.625
+  },
+  {
+   "id": "2047129",
+   "lat": -20.769399642944336,
+   "lon": -47.46670150756836,
+   "ano": 2021,
+   "dias_chuva": 11,
+   "maxima_mm": 215.89999389648438
+  },
+  {
+   "id": "2146118",
+   "lat": -21.60140037536621,
+   "lon": -46.94940185546875,
+   "ano": 2018,
+   "dias_chuva": 6,
+   "maxima_mm": 437.5
+  },
+  {
+   "id": "2453012",
+   "lat": -24.798599243164062,
+   "lon": -53.29130172729492,
+   "ano": 2020,
+   "dias_chuva": 24,
+   "maxima_mm": 203.89999389648438
+  },
+  {
+   "id": "540116",
+   "lat": -5.621099948883057,
+   "lon": -40.29499816894531,
+   "ano": 2023,
+   "dias_chuva": 24,
+   "maxima_mm": 205.0
+  },
+  {
+   "id": "837028",
+   "lat": -8.716699600219727,
+   "lon": -37.53329849243164,
+   "ano": 1980,
+   "dias_chuva": 14,
+   "maxima_mm": 204.0
+  },
+  {
+   "id": "863007",
+   "lat": -8.795000076293945,
+   "lon": -63.84579849243164,
+   "ano": 2006,
+   "dias_chuva": 11,
+   "maxima_mm": 428.0
+  },
+  {
+   "id": "940003",
+   "lat": -9.23330020904541,
+   "lon": -40.400001525878906,
+   "ano": 1984,
+   "dias_chuva": 22,
+   "maxima_mm": 263.5
+  },
+  {
+   "id": "940009",
+   "lat": -9.982799530029297,
+   "lon": -40.24250030517578,
+   "ano": 1965,
+   "dias_chuva": 15,
+   "maxima_mm": 256.25
+  },
+  {
+   "id": "941018",
+   "lat": -9.736700057983398,
+   "lon": -41.870601654052734,
+   "ano": 2011,
+   "dias_chuva": 13,
+   "maxima_mm": 200.89999389648438
+  },
+  {
+   "id": "962004",
+   "lat": -9.934700012207031,
+   "lon": -62.961700439453125,
+   "ano": 2006,
+   "dias_chuva": 9,
+   "maxima_mm": 364.5
+  },
+  {
+   "id": "962005",
+   "lat": -9.396900177001953,
+   "lon": -62.01940155029297,
+   "ano": 2006,
+   "dias_chuva": 9,
+   "maxima_mm": 410.5
+  },
+  {
+   "id": "B4-026",
+   "lat": -20.03333282470703,
+   "lon": -47.75,
+   "ano": 1999,
+   "dias_chuva": 16,
+   "maxima_mm": 201.1999969482422
+  },
+  {
+   "id": "D6-030",
+   "lat": -22.33333396911621,
+   "lon": -49.36666488647461,
+   "ano": 1966,
+   "dias_chuva": 20,
+   "maxima_mm": 209.0
+  }
+ ],
+ "municipios": {
+  "1100080": {
+   "nome": "Costa Marques",
+   "uf": "RO",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998,
+    2006
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária",
+    "2006: estação 1061004 (270 km), totais mensais como chuva diária; valor da grade 156 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1100106": {
+   "nome": "Guajará-Mirim",
+   "uf": "RO",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998,
+    2006
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária",
+    "2006: estação 1061004 (286 km), totais mensais como chuva diária; valor da grade 209 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1100205": {
+   "nome": "Porto Velho",
+   "uf": "RO",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "1100320": {
+   "nome": "São Miguel do Guaporé",
+   "uf": "RO",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "1100338": {
+   "nome": "Nova Mamoré",
+   "uf": "RO",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998,
+    2006
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária",
+    "2006: estação 1061004 (297 km), totais mensais como chuva diária; valor da grade 161 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1100452": {
+   "nome": "Buritis",
+   "uf": "RO",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998,
+    2006
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária",
+    "2006: estação 1061004 (235 km), totais mensais como chuva diária; valor da grade 124 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1101005": {
+   "nome": "Governador Jorge Teixeira",
+   "uf": "RO",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "1101492": {
+   "nome": "São Francisco do Guaporé",
+   "uf": "RO",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998,
+    2006
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária",
+    "2006: estação 1061004 (210 km), totais mensais como chuva diária; valor da grade 196 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1101500": {
+   "nome": "Seringueiras",
+   "uf": "RO",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998,
+    2006
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária",
+    "2006: estação 1061004 (174 km), totais mensais como chuva diária; valor da grade 153 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1200013": {
+   "nome": "Acrelândia",
+   "uf": "AC",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "1200054": {
+   "nome": "Assis Brasil",
+   "uf": "AC",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998,
+    2001
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária",
+    "2001: estação 1168002 (129 km), totais mensais como chuva diária; valor da grade 117 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1200104": {
+   "nome": "Brasiléia",
+   "uf": "AC",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "1200138": {
+   "nome": "Bujari",
+   "uf": "AC",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "1200179": {
+   "nome": "Capixaba",
+   "uf": "AC",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "1200252": {
+   "nome": "Epitaciolândia",
+   "uf": "AC",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "1200344": {
+   "nome": "Manoel Urbano",
+   "uf": "AC",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "1200385": {
+   "nome": "Plácido de Castro",
+   "uf": "AC",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "1200401": {
+   "nome": "Rio Branco",
+   "uf": "AC",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "1200450": {
+   "nome": "Senador Guiomard",
+   "uf": "AC",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "1200500": {
+   "nome": "Sena Madureira",
+   "uf": "AC",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "1200708": {
+   "nome": "Xapuri",
+   "uf": "AC",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "1200807": {
+   "nome": "Porto Acre",
+   "uf": "AC",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "1300706": {
+   "nome": "Boca do Acre",
+   "uf": "AM",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "1302405": {
+   "nome": "Lábrea",
+   "uf": "AM",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "1303502": {
+   "nome": "Pauini",
+   "uf": "AM",
+   "anos": [
+    1961,
+    1962,
+    1963,
+    1964,
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972,
+    1973,
+    1974,
+    1975,
+    1976,
+    1977,
+    1978,
+    1979,
+    1980,
+    1981,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998
+   ],
+   "motivo": [
+    "estação 1166000: totais mensais registrados como chuva diária"
+   ]
+  },
+  "2901304": {
+   "nome": "Andaraí",
+   "uf": "BA",
+   "anos": [
+    1977
+   ],
+   "motivo": [
+    "1977: estação 1040015 (201 km), totais mensais como chuva diária; valor da grade 135 mm > Q3 + 3 IQR"
+   ]
+  },
+  "2914604": {
+   "nome": "Irecê",
+   "uf": "BA",
+   "anos": [
+    1977
+   ],
+   "motivo": [
+    "1977: estação 1040015 (107 km), totais mensais como chuva diária; valor da grade 116 mm > Q3 + 3 IQR"
+   ]
+  },
+  "2918357": {
+   "nome": "João Dourado",
+   "uf": "BA",
+   "anos": [
+    1977
+   ],
+   "motivo": [
+    "1977: estação 1040015 (75 km), totais mensais como chuva diária; valor da grade 103 mm > Q3 + 3 IQR"
+   ]
+  },
+  "2919306": {
+   "nome": "Lençóis",
+   "uf": "BA",
+   "anos": [
+    1977
+   ],
+   "motivo": [
+    "1977: estação 1040015 (170 km), totais mensais como chuva diária; valor da grade 135 mm > Q3 + 3 IQR"
+   ]
+  },
+  "2921401": {
+   "nome": "Mirangaba",
+   "uf": "BA",
+   "anos": [
+    1977
+   ],
+   "motivo": [
+    "1977: estação 1040015 (31 km), totais mensais como chuva diária; valor da grade 104 mm > Q3 + 3 IQR"
+   ]
+  },
+  "2923357": {
+   "nome": "Ourolândia",
+   "uf": "BA",
+   "anos": [
+    1977
+   ],
+   "motivo": [
+    "1977: estação 1040015 (25 km), totais mensais como chuva diária; valor da grade 96 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1100015": {
+   "nome": "Alta Floresta d'Oeste",
+   "uf": "RO",
+   "anos": [
+    2006
+   ],
+   "motivo": [
+    "2006: estação 1061004 (182 km), totais mensais como chuva diária; valor da grade 116 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1100148": {
+   "nome": "Nova Brasilândia d'Oeste",
+   "uf": "RO",
+   "anos": [
+    2006
+   ],
+   "motivo": [
+    "2006: estação 1061004 (94 km), totais mensais como chuva diária; valor da grade 147 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1100254": {
+   "nome": "Presidente Médici",
+   "uf": "RO",
+   "anos": [
+    2006
+   ],
+   "motivo": [
+    "2006: estação 1061004 (35 km), totais mensais como chuva diária; valor da grade 145 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1100346": {
+   "nome": "Alvorada d'Oeste",
+   "uf": "RO",
+   "anos": [
+    2006
+   ],
+   "motivo": [
+    "2006: estação 1061004 (81 km), totais mensais como chuva diária; valor da grade 140 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1100502": {
+   "nome": "Novo Horizonte do Oeste",
+   "uf": "RO",
+   "anos": [
+    2006
+   ],
+   "motivo": [
+    "2006: estação 1061004 (92 km), totais mensais como chuva diária; valor da grade 160 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1100700": {
+   "nome": "Campo Novo de Rondônia",
+   "uf": "RO",
+   "anos": [
+    2006
+   ],
+   "motivo": [
+    "2006: estação 1061004 (206 km), totais mensais como chuva diária; valor da grade 181 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1100908": {
+   "nome": "Castanheiras",
+   "uf": "RO",
+   "anos": [
+    2006
+   ],
+   "motivo": [
+    "2006: estação 1061004 (68 km), totais mensais como chuva diária; valor da grade 134 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1101203": {
+   "nome": "Ministro Andreazza",
+   "uf": "RO",
+   "anos": [
+    2006
+   ],
+   "motivo": [
+    "2006: estação 1061004 (54 km), totais mensais como chuva diária; valor da grade 148 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1101302": {
+   "nome": "Mirante da Serra",
+   "uf": "RO",
+   "anos": [
+    2006
+   ],
+   "motivo": [
+    "2006: estação 1061004 (100 km), totais mensais como chuva diária; valor da grade 144 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1101708": {
+   "nome": "Urupá",
+   "uf": "RO",
+   "anos": [
+    2006
+   ],
+   "motivo": [
+    "2006: estação 1061004 (58 km), totais mensais como chuva diária; valor da grade 139 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1700707": {
+   "nome": "Alvorada",
+   "uf": "TO",
+   "anos": [
+    2022
+   ],
+   "motivo": [
+    "2022: estação 1146014 (261 km), totais mensais como chuva diária; valor da grade 93 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1707009": {
+   "nome": "Dianópolis",
+   "uf": "TO",
+   "anos": [
+    2022
+   ],
+   "motivo": [
+    "2022: estação 1146014 (14 km), totais mensais como chuva diária; valor da grade 119 mm > Q3 + 3 IQR"
+   ]
+  },
+  "1717909": {
+   "nome": "Ponte Alta do Tocantins",
+   "uf": "TO",
+   "anos": [
+    2022
+   ],
+   "motivo": [
+    "2022: estação 1146014 (132 km), totais mensais como chuva diária; valor da grade 109 mm > Q3 + 3 IQR"
+   ]
+  },
+  "2901403": {
+   "nome": "Angical",
+   "uf": "BA",
+   "anos": [
+    2022
+   ],
+   "motivo": [
+    "2022: estação 1146014 (234 km), totais mensais como chuva diária; valor da grade 98 mm > Q3 + 3 IQR"
+   ]
+  },
+  "5105622": {
+   "nome": "Mirassol d'Oeste",
+   "uf": "MT",
+   "anos": [
+    2010
+   ],
+   "motivo": [
+    "2010: estação 1557003 (62 km), totais mensais como chuva diária; valor da grade 95 mm > Q3 + 3 IQR"
+   ]
+  },
+  "5106281": {
+   "nome": "Novo São Joaquim",
+   "uf": "MT",
+   "anos": [
+    2025
+   ],
+   "motivo": [
+    "2025: estação 1651017 (266 km), totais mensais como chuva diária; valor da grade 103 mm > Q3 + 3 IQR"
+   ]
+  },
+  "3100609": {
+   "nome": "Água Boa",
+   "uf": "MG",
+   "anos": [
+    2016
+   ],
+   "motivo": [
+    "2016: estação 2040048 (284 km), totais mensais como chuva diária; valor da grade 124 mm > Q3 + 3 IQR"
+   ]
+  },
+  "3112059": {
+   "nome": "Cantagalo",
+   "uf": "MG",
+   "anos": [
+    2016
+   ],
+   "motivo": [
+    "2016: estação 2040048 (272 km), totais mensais como chuva diária; valor da grade 114 mm > Q3 + 3 IQR"
+   ]
+  },
+  "3128006": {
+   "nome": "Guanhães",
+   "uf": "MG",
+   "anos": [
+    2016
+   ],
+   "motivo": [
+    "2016: estação 2040048 (269 km), totais mensais como chuva diária; valor da grade 116 mm > Q3 + 3 IQR"
+   ]
+  },
+  "3139201": {
+   "nome": "Malacacheta",
+   "uf": "MG",
+   "anos": [
+    2016
+   ],
+   "motivo": [
+    "2016: estação 2040048 (291 km), totais mensais como chuva diária; valor da grade 117 mm > Q3 + 3 IQR"
+   ]
+  },
+  "3156809": {
+   "nome": "Sabinópolis",
+   "uf": "MG",
+   "anos": [
+    2016
+   ],
+   "motivo": [
+    "2016: estação 2040048 (298 km), totais mensais como chuva diária; valor da grade 137 mm > Q3 + 3 IQR"
+   ]
+  },
+  "3158201": {
+   "nome": "Santa Maria do Suaçuí",
+   "uf": "MG",
+   "anos": [
+    2016
+   ],
+   "motivo": [
+    "2016: estação 2040048 (267 km), totais mensais como chuva diária; valor da grade 124 mm > Q3 + 3 IQR"
+   ]
+  },
+  "3162807": {
+   "nome": "São João Evangelista",
+   "uf": "MG",
+   "anos": [
+    2016
+   ],
+   "motivo": [
+    "2016: estação 2040048 (282 km), totais mensais como chuva diária; valor da grade 125 mm > Q3 + 3 IQR"
+   ]
+  },
+  "3164506": {
+   "nome": "São Sebastião do Maranhão",
+   "uf": "MG",
+   "anos": [
+    2016
+   ],
+   "motivo": [
+    "2016: estação 2040048 (299 km), totais mensais como chuva diária; valor da grade 104 mm > Q3 + 3 IQR"
+   ]
+  },
+  "3169604": {
+   "nome": "Tupaciguara",
+   "uf": "MG",
+   "anos": [
+    2021
+   ],
+   "motivo": [
+    "2021: estação 2047129 (283 km), totais mensais como chuva diária; valor da grade 126 mm > Q3 + 3 IQR"
+   ]
+  },
+  "2304269": {
+   "nome": "Deputado Irapuan Pinheiro",
+   "uf": "CE",
+   "anos": [
+    2023
+   ],
+   "motivo": [
+    "2023: estação 540116 (118 km), totais mensais como chuva diária; valor da grade 149 mm > Q3 + 3 IQR"
+   ]
+  },
+  "3504305": {
+   "nome": "Avaí",
+   "uf": "SP",
+   "anos": [
+    1966
+   ],
+   "motivo": [
+    "1966: estação D6-030 (17 km), totais mensais como chuva diária; valor da grade 130 mm > Q3 + 3 IQR"
+   ]
+  },
+  "3535002": {
+   "nome": "Palestina",
+   "uf": "SP",
+   "anos": [
+    1966
+   ],
+   "motivo": [
+    "1966: estação D6-030 (224 km), totais mensais como chuva diária; valor da grade 143 mm > Q3 + 3 IQR"
+   ]
+  },
+  "3553401": {
+   "nome": "Tanabi",
+   "uf": "SP",
+   "anos": [
+    1966
+   ],
+   "motivo": [
+    "1966: estação D6-030 (202 km), totais mensais como chuva diária; valor da grade 156 mm > Q3 + 3 IQR"
+   ]
+  },
+  "3554508": {
+   "nome": "Tietê",
+   "uf": "SP",
+   "anos": [
+    1966
+   ],
+   "motivo": [
+    "1966: estação D6-030 (188 km), totais mensais como chuva diária; valor da grade 131 mm > Q3 + 3 IQR"
+   ]
+  }
+ }
+}

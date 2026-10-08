@@ -69,6 +69,13 @@ Diferença de conteúdo: em vez de climograma (chuva+temperatura mensal), o pain
 
 **Validação real com navegador**: `playwright` + Chromium instalados neste ambiente (macOS Ventura/mac13 não é oficialmente suportado pelas versões recentes do Playwright — funcionou baixando os binários do Chromium mesmo assim). Teste automatizado cobriu: carregar `index.html` e `idf.html` sem erros de console, mapa do Paraná carregando e colorindo corretamente, clique/seleção de município (Curitiba) abrindo o painel de detalhe com os cards de coeficientes, gráfico da curva IDF renderizando, troca de métrica do mapa (k) e troca de UF (SC) funcionando. Zero erros em todos os testes.
 
+### Controle de qualidade contra as estações do BR-DWGD (2026-10-08)
+- O *a* alto do Acre (0,317, o dobro de qualquer UF) era **artefato de dados**: a estação **1166000** (−11,02°, −66,08°, perto de Riberalta/BO) tem **totais mensais lançados como chuva diária** em 37 anos (1961–1998): ~11 dias de chuva/ano, máximas de 250–446 mm. Até 1969 era a única estação com ano completo num raio de 300 km, então dominava a interpolação da região. Também há 33 estação-anos isolados com o mesmo erro (11 em 2006, em RO/AM/MT).
+- Dados das estações: `pr.npz` (1,35 GB, 14.170 estações, 1961–2025), distribuído pelos autores do BR-DWGD num Google Drive público (não está no repositório). O campo `ID` é pickle: lido com unpickler restrito (só reconstrução de arrays numpy).
+- `controle_qualidade_estacoes.py` gera `qc/`; regras: (a) estação persistente (≥5 anos com ≤24 dias de chuva e máxima >200 mm): exclui os anos sinalizados nos municípios a ≤500 km cuja razão média(anos sinalizados)/média(outros) > p95 nacional; (b) estação-ano isolado: exclui o ano nos municípios a ≤300 km em que o valor da grade > Q3 + 3·IQR da própria série. Resultado: 968 município-anos em 61 municípios. `calcular_idf_municipios.py` remove esses anos; o site mostra as barras em cinza e um aviso.
+- Grade × estação (≤10 km, ≥30 anos, 1.400 pares): grade 26% abaixo (mediana 0,74), r mediano 0,55.
+- Tendências (MK + FDR q=0,10): 1.866 municípios, mas o τ da grade cresce com a densificação da rede (Spearman 0,21); só 5,5% dos pares têm tendência significativa de mesmo sinal na grade e na estação. Decisão: curvas continuam estacionárias; tendência da grade entra no artigo como resultado de QC com ressalva.
+
 ## Estado atual
 
 - **Extração concluída** (2026-08-08): `xavier_chuva_maxima_diaria_anual_municipios_1961_2025.json` na pasta do projeto, 362.115 registros (5.571 municípios × 65 anos), 130 nulos esperados (Noronha + Vitória × 65 anos). Rodada localmente via `extrair_chuva_maxima.py` (versão `.py` do notebook, sem depender de Colab/download manual).
